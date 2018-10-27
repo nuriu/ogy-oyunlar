@@ -37,7 +37,7 @@ class Game
     float m_BallAngle;
 
     const float paddleSpeed = 500.f;
-    const float ballSpeed = 500.f;
+    const float ballSpeed = 300.f;
     const float pi = 3.14159f;
 };
 

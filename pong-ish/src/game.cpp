@@ -121,6 +121,47 @@ void Game::update()
             m_Ball->setPosition(m_Ball->getPosition().x,
                                 m_Window->getSize().y - m_Ball->getSize().y - 0.1f);
         }
+
+        // AABB çarpışma tanılama
+        // m_PlayerOne (sol paddle) ile çarpışma durumu
+        if (m_Ball->getPosition().x <= m_PlayerOne->getPosition().x + m_PlayerOne->getSize().x &&
+            m_Ball->getPosition().x + m_Ball->getSize().x >= m_PlayerOne->getPosition().x &&
+            m_Ball->getPosition().y <= m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y &&
+            m_Ball->getPosition().y + m_Ball->getSize().y >= m_PlayerOne->getPosition().y)
+        {
+            // topun çarpışma sonrası yönü
+            if (m_Ball->getPosition().y > m_PlayerOne->getPosition().y)
+            {
+                m_BallAngle = pi - m_BallAngle + (std::rand() % 20) * pi / 180;
+            }
+            else
+            {
+                m_BallAngle = pi - m_BallAngle - (std::rand() % 20) * pi / 180;
+            }
+
+            m_Ball->setPosition(m_PlayerOne->getPosition().x + m_Ball->getSize().x + 0.1f,
+                                m_Ball->getPosition().y);
+        }
+
+        // m_PlayerTwo (sağ paddle) ile çarpışma durumu
+        if (m_Ball->getPosition().x + m_Ball->getSize().x >= m_PlayerTwo->getPosition().x &&
+            m_Ball->getPosition().x + m_Ball->getSize().x <= m_PlayerTwo->getPosition().x + m_PlayerTwo->getSize().x &&
+            m_Ball->getPosition().y + m_Ball->getSize().y >= m_PlayerTwo->getPosition().y &&
+            m_Ball->getPosition().y <= m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y)
+        {
+            // topun çarpışma sonrası yönü
+            if (m_Ball->getPosition().y > m_PlayerTwo->getPosition().y)
+            {
+                m_BallAngle = pi - m_BallAngle + (std::rand() % 20) * pi / 180;
+            }
+            else
+            {
+                m_BallAngle = pi - m_BallAngle - (std::rand() % 20) * pi / 180;
+            }
+
+            m_Ball->setPosition(m_PlayerTwo->getPosition().x - m_Ball->getSize().x - 0.1f,
+                                m_Ball->getPosition().y);
+        }
     }
 }
 
