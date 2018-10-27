@@ -9,6 +9,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
@@ -29,6 +31,11 @@ class Game
 
   private:
     std::unique_ptr<sf::RenderWindow> m_Window;
+    std::unique_ptr<sf::Font> m_Font;
+    std::unique_ptr<sf::Text> m_Title;
+    std::unique_ptr<sf::Text> m_StatusText;
+    std::unique_ptr<sf::Text> m_PlayerOneScoreText;
+    std::unique_ptr<sf::Text> m_PlayerTwoScoreText;
     std::unique_ptr<Paddle> m_PlayerOne;
     std::unique_ptr<Paddle> m_PlayerTwo;
     std::unique_ptr<Paddle> m_Ball;

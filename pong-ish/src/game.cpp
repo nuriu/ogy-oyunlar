@@ -18,6 +18,33 @@ Game::Game(const sf::String &title, const unsigned int width,
 
     m_Window->setVerticalSyncEnabled(true);
 
+    m_Font = std::make_unique<sf::Font>();
+
+    if (!m_Font->loadFromFile("assets/fonts/Kenney-Blocks.ttf"))
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    m_Title = std::make_unique<sf::Text>("Pong-ish", *m_Font);
+    m_StatusText = std::make_unique<sf::Text>("Playing", *m_Font);
+    m_PlayerOneScoreText = std::make_unique<sf::Text>("0", *m_Font);
+    m_PlayerTwoScoreText = std::make_unique<sf::Text>("0", *m_Font);
+
+    m_Title->setFillColor(sf::Color::White);
+    m_StatusText->setFillColor(sf::Color::White);
+    m_PlayerOneScoreText->setFillColor(sf::Color::White);
+    m_PlayerTwoScoreText->setFillColor(sf::Color::White);
+
+    m_Title->setCharacterSize(40.f);
+    m_StatusText->setCharacterSize(20.f);
+    m_PlayerOneScoreText->setCharacterSize(50.f);
+    m_PlayerTwoScoreText->setCharacterSize(50.f);
+
+    m_Title->setPosition(sf::Vector2f(m_Window->getSize().x / 2 - 110, 20));
+    m_StatusText->setPosition(sf::Vector2f(m_Window->getSize().x / 2 - 50, 100));
+    m_PlayerOneScoreText->setPosition(sf::Vector2f(m_Window->getSize().x / 4 - 20, 150));
+    m_PlayerTwoScoreText->setPosition(sf::Vector2f(m_Window->getSize().x / 4 * 3, 150));
+
     m_PlayerOne = std::make_unique<Paddle>(
         sf::Vector2f(10, 100),
         sf::Vector2f(10, m_Window->getSize().y / 2 - 50),
@@ -48,11 +75,12 @@ void Game::run()
     {
         processEvents();
 
-        while (m_IsPlaying)
+        if (m_IsPlaying)
         {
             update();
-            render();
         }
+
+        render();
     }
 }
 
@@ -86,6 +114,27 @@ void Game::processEvents()
         {
             m_Window->close();
             break;
+        }
+
+        if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
+        {
+            if (!m_IsPlaying)
+            {
+                m_IsPlaying = true;
+
+                m_Clock.restart();
+
+                m_PlayerOneScore = 0;
+                m_PlayerTwoScore = 0;
+
+                m_PlayerOneScoreText->setString(std::to_string(m_PlayerOneScore));
+                m_PlayerTwoScoreText->setString(std::to_string(m_PlayerTwoScore));
+
+                m_StatusText->setString("Playing");
+                m_StatusText->setPosition(sf::Vector2f(m_Window->getSize().x / 2 - 50, 100));
+
+                initGameRound();
+            }
         }
     }
 }
@@ -147,9 +196,12 @@ void Game::update()
         if (m_Ball->getPosition().x < 0.f)
         {
             m_PlayerTwoScore++;
+            m_PlayerTwoScoreText->setString(std::to_string(m_PlayerTwoScore));
 
             if (m_PlayerTwoScore == 10)
             {
+                m_StatusText->setString("Player Two Won! Press Space to restart.");
+                m_StatusText->setPosition(sf::Vector2f(m_Window->getSize().x / 3 - 25, 100));
                 m_IsPlaying = false;
             }
 
@@ -161,9 +213,12 @@ void Game::update()
         if (m_Ball->getPosition().x + m_Ball->getSize().x > m_Window->getSize().x)
         {
             m_PlayerOneScore++;
+            m_PlayerOneScoreText->setString(std::to_string(m_PlayerOneScore));
 
             if (m_PlayerOneScore == 10)
             {
+                m_StatusText->setString("Player One Won! Press Space to restart.");
+                m_StatusText->setPosition(sf::Vector2f(m_Window->getSize().x / 3 - 25, 100));
                 m_IsPlaying = false;
             }
 
@@ -216,8 +271,18 @@ void Game::update()
 void Game::render()
 {
     m_Window->clear();
-    m_Window->draw(*m_PlayerOne);
-    m_Window->draw(*m_PlayerTwo);
-    m_Window->draw(*m_Ball);
+
+    if (m_IsPlaying)
+    {
+        m_Window->draw(*m_PlayerOne);
+        m_Window->draw(*m_PlayerTwo);
+        m_Window->draw(*m_Ball);
+    }
+
+    m_Window->draw(*m_Title);
+    m_Window->draw(*m_StatusText);
+    m_Window->draw(*m_PlayerOneScoreText);
+    m_Window->draw(*m_PlayerTwoScoreText);
+
     m_Window->display();
 }
