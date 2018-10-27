@@ -13,7 +13,7 @@ Game::Game(const sf::String &title, const unsigned int width,
                                                   sf::Style::Fullscreen);
 #else
     m_Window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height),
-                                                  title);
+                                                  title, sf::Style::Close);
 #endif
 
     m_Window->setVerticalSyncEnabled(true);
