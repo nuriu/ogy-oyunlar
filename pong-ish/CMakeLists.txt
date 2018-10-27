@@ -9,11 +9,13 @@ find_package(SFML 2.5.1 COMPONENTS graphics audio REQUIRED)
 include_directories($ENV{SFML_ROOT}/include/ include/)
 
 set(HEADERS
-            include/game.hpp)
+            include/game.hpp
+            include/paddle.hpp)
 
 set(SOURCES
             src/main.cpp
-            src/game.cpp)
+            src/game.cpp
+            src/paddle.cpp)
 
 source_group("Headers" FILES ${HEADERS})
 source_group("Sources" FILES ${SOURCES})
