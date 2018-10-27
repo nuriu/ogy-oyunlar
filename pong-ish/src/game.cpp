@@ -37,12 +37,9 @@ Game::Game(const sf::String &title, const unsigned int width,
 
     std::srand(static_cast<unsigned int>(std::time(NULL)));
 
-    // topun başlangıç açısının belirlenmesi
-    // kaynak: SFML pong örneği "SFML_DIR/examples/pong"
-    do
-    {
-        m_BallAngle = (std::rand() % 360) * 2 * pi / 360;
-    } while (std::abs(std::cos(m_BallAngle)) < 0.7f);
+    m_IsPlaying = true;
+
+    initGameRound();
 }
 
 void Game::run()
@@ -50,9 +47,32 @@ void Game::run()
     while (m_Window->isOpen())
     {
         processEvents();
-        update();
-        render();
+
+        while (m_IsPlaying)
+        {
+            update();
+            render();
+        }
     }
+}
+
+void Game::initGameRound()
+{
+    // oyuncuların ve topun konumlarını varsayılan değerlerine çekiyoruz
+    m_PlayerOne->setPosition(sf::Vector2f(10, m_Window->getSize().y / 2 - 50));
+
+    m_PlayerTwo->setPosition(sf::Vector2f(m_Window->getSize().x - 20,
+                                          m_Window->getSize().y / 2 - 50));
+
+    m_Ball->setPosition(sf::Vector2f(m_Window->getSize().x / 2 - 5,
+                                     m_Window->getSize().y / 2 - 5));
+
+    // topun ilk atışta sahip olacağı açıyı yeniden hesaplıyoruz
+    // kaynak: SFML pong örneği "SFML_DIR/examples/pong"
+    do
+    {
+        m_BallAngle = (std::rand() % 360) * 2 * pi / 360;
+    } while (std::abs(std::cos(m_BallAngle)) < 0.7f);
 }
 
 void Game::processEvents()
@@ -120,6 +140,34 @@ void Game::update()
             m_BallAngle = -m_BallAngle;
             m_Ball->setPosition(m_Ball->getPosition().x,
                                 m_Window->getSize().y - m_Ball->getSize().y - 0.1f);
+        }
+
+        // ekranın sol sınırını geçme durumu
+        // m_PlayerTwo 1 skor puanı alır
+        if (m_Ball->getPosition().x < 0.f)
+        {
+            m_PlayerTwoScore++;
+
+            if (m_PlayerTwoScore == 10)
+            {
+                m_IsPlaying = false;
+            }
+
+            initGameRound();
+        }
+
+        // ekranın sağ sınırını geçme durumu
+        // m_PlayerOne 1 skor puanı alır
+        if (m_Ball->getPosition().x + m_Ball->getSize().x > m_Window->getSize().x)
+        {
+            m_PlayerOneScore++;
+
+            if (m_PlayerOneScore == 10)
+            {
+                m_IsPlaying = false;
+            }
+
+            initGameRound();
         }
 
         // AABB çarpışma tanılama

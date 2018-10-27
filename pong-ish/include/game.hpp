@@ -22,6 +22,7 @@ class Game
     void run();
 
   private:
+    void initGameRound();
     void processEvents();
     void update();
     void render();
@@ -35,6 +36,9 @@ class Game
     sf::Clock m_Clock;
 
     float m_BallAngle;
+    int m_PlayerOneScore = 0;
+    int m_PlayerTwoScore = 0;
+    bool m_IsPlaying;
 
     const float paddleSpeed = 500.f;
     const float ballSpeed = 300.f;
