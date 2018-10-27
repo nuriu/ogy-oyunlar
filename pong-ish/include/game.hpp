@@ -27,6 +27,10 @@ class Game
     std::unique_ptr<sf::RenderWindow> m_Window;
     std::unique_ptr<Paddle> m_PlayerOne;
     std::unique_ptr<Paddle> m_PlayerTwo;
+
+    sf::Clock m_Clock;
+
+    const float paddleSpeed = 500.f;
 };
 
 #endif

@@ -16,15 +16,17 @@ Game::Game(const sf::String &title, const unsigned int width,
                                                   title);
 #endif
 
+    m_Window->setVerticalSyncEnabled(true);
+
     m_PlayerOne = std::make_unique<Paddle>(
         sf::Vector2f(10, 100),
-        sf::Vector2f(10, this->m_Window->getSize().y / 2 - 50),
+        sf::Vector2f(10, m_Window->getSize().y / 2 - 50),
         sf::Color::Magenta);
 
     m_PlayerTwo = std::make_unique<Paddle>(
         sf::Vector2f(10, 100),
-        sf::Vector2f(this->m_Window->getSize().x - 20,
-                     this->m_Window->getSize().y / 2 - 50),
+        sf::Vector2f(m_Window->getSize().x - 20,
+                     m_Window->getSize().y / 2 - 50),
         sf::Color::Cyan);
 }
 
@@ -55,50 +57,30 @@ void Game::processEvents()
 
 void Game::update()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        m_PlayerOne->setPosition(m_PlayerOne->getPosition().x,
-                                 m_PlayerOne->getPosition().y - 1.f);
+    float deltaTime = m_Clock.restart().asSeconds();
 
-        if (m_PlayerOne->getPosition().y < 0.f)
-        {
-            m_PlayerOne->setPosition(m_PlayerOne->getPosition().x, 0.f);
-        }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) &&
+        m_PlayerOne->getPosition().y > 0.f)
+    {
+        m_PlayerOne->move(0.f, -paddleSpeed * deltaTime);
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
+        m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y < m_Window->getSize().y)
     {
-        m_PlayerOne->setPosition(m_PlayerOne->getPosition().x,
-                                 m_PlayerOne->getPosition().y + 1.f);
-
-        if (m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y > m_Window->getSize().y)
-        {
-            m_PlayerOne->setPosition(m_PlayerOne->getPosition().x,
-                                     m_Window->getSize().y - m_PlayerOne->getSize().y);
-        }
+        m_PlayerOne->move(0.f, paddleSpeed * deltaTime);
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
+        m_PlayerTwo->getPosition().y > 0.f)
     {
-        m_PlayerTwo->setPosition(m_PlayerTwo->getPosition().x,
-                                 m_PlayerTwo->getPosition().y - 1.f);
-
-        if (m_PlayerTwo->getPosition().y < 0.f)
-        {
-            m_PlayerTwo->setPosition(m_PlayerTwo->getPosition().x, 0.f);
-        }
+        m_PlayerTwo->move(0.f, -paddleSpeed * deltaTime);
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
+        m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y < m_Window->getSize().y)
     {
-        m_PlayerTwo->setPosition(m_PlayerTwo->getPosition().x,
-                                 m_PlayerTwo->getPosition().y + 1.f);
-
-        if (m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y > m_Window->getSize().y)
-        {
-            m_PlayerTwo->setPosition(m_PlayerTwo->getPosition().x,
-                                     m_Window->getSize().y - m_PlayerTwo->getSize().y);
-        }
+        m_PlayerTwo->move(0.f, paddleSpeed * deltaTime);
     }
 }
 
