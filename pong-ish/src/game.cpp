@@ -28,6 +28,21 @@ Game::Game(const sf::String &title, const unsigned int width,
         sf::Vector2f(m_Window->getSize().x - 20,
                      m_Window->getSize().y / 2 - 50),
         sf::Color::Cyan);
+
+    m_Ball = std::make_unique<Paddle>(
+        sf::Vector2f(10, 10),
+        sf::Vector2f(m_Window->getSize().x / 2 - 5,
+                     m_Window->getSize().y / 2 - 5),
+        sf::Color::White);
+
+    std::srand(static_cast<unsigned int>(std::time(NULL)));
+
+    // topun başlangıç açısının belirlenmesi
+    // kaynak: SFML pong örneği "SFML_DIR/examples/pong"
+    do
+    {
+        m_BallAngle = (std::rand() % 360) * 2 * pi / 360;
+    } while (std::abs(std::cos(m_BallAngle)) < 0.7f);
 }
 
 void Game::run()
@@ -59,28 +74,53 @@ void Game::update()
 {
     float deltaTime = m_Clock.restart().asSeconds();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) &&
-        m_PlayerOne->getPosition().y > 0.f)
+    // paddle hareket güncellemeleri
     {
-        m_PlayerOne->move(0.f, -paddleSpeed * deltaTime);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) &&
+            m_PlayerOne->getPosition().y > 0.f)
+        {
+            m_PlayerOne->move(0.f, -paddleSpeed * deltaTime);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
+            m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y < m_Window->getSize().y)
+        {
+            m_PlayerOne->move(0.f, paddleSpeed * deltaTime);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
+            m_PlayerTwo->getPosition().y > 0.f)
+        {
+            m_PlayerTwo->move(0.f, -paddleSpeed * deltaTime);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
+            m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y < m_Window->getSize().y)
+        {
+            m_PlayerTwo->move(0.f, paddleSpeed * deltaTime);
+        }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
-        m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y < m_Window->getSize().y)
+    // top hareket güncellemeleri
     {
-        m_PlayerOne->move(0.f, paddleSpeed * deltaTime);
-    }
+        m_Ball->move(std::cos(m_BallAngle) * ballSpeed * deltaTime,
+                     std::sin(m_BallAngle) * ballSpeed * deltaTime);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
-        m_PlayerTwo->getPosition().y > 0.f)
-    {
-        m_PlayerTwo->move(0.f, -paddleSpeed * deltaTime);
-    }
+        // ekranın üstüne çarpma durumu
+        if (m_Ball->getPosition().y < 0.f)
+        {
+            m_BallAngle = -m_BallAngle;
+            m_Ball->setPosition(m_Ball->getPosition().x,
+                                m_Ball->getSize().y + 0.1f);
+        }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
-        m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y < m_Window->getSize().y)
-    {
-        m_PlayerTwo->move(0.f, paddleSpeed * deltaTime);
+        // ekranın altına çarpma durumu
+        if (m_Ball->getPosition().y + m_Ball->getSize().y > m_Window->getSize().y)
+        {
+            m_BallAngle = -m_BallAngle;
+            m_Ball->setPosition(m_Ball->getPosition().x,
+                                m_Window->getSize().y - m_Ball->getSize().y - 0.1f);
+        }
     }
 }
 
@@ -89,5 +129,6 @@ void Game::render()
     m_Window->clear();
     m_Window->draw(*m_PlayerOne);
     m_Window->draw(*m_PlayerTwo);
+    m_Window->draw(*m_Ball);
     m_Window->display();
 }

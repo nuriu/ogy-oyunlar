@@ -3,6 +3,9 @@
 #pragma once
 
 #include <memory>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -27,10 +30,15 @@ class Game
     std::unique_ptr<sf::RenderWindow> m_Window;
     std::unique_ptr<Paddle> m_PlayerOne;
     std::unique_ptr<Paddle> m_PlayerTwo;
+    std::unique_ptr<Paddle> m_Ball;
 
     sf::Clock m_Clock;
 
+    float m_BallAngle;
+
     const float paddleSpeed = 500.f;
+    const float ballSpeed = 500.f;
+    const float pi = 3.14159f;
 };
 
 #endif
