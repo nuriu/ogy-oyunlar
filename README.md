@@ -7,3 +7,5 @@ Projeler [sfml-cmake-vscode](https://github.com/nuriu/sfml-cmake-vscode) proje �
 Projeler;
 
 1. [Pong-ish](https://github.com/nuriu/ogy-oyunlar/tree/master/pong-ish)
+
+![pong-ish ekran görüntüsü](pong-ish/Screenshot.png)
