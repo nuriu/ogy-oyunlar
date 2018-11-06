@@ -11,6 +11,8 @@ void MenuScene::initialize()
 {
     m_Components->m_AssetManager->loadFont("kenney-high",
                                            "assets/fonts/Kenney-High.ttf");
+    m_Components->m_AssetManager->loadSound("click",
+                                            "assets/sounds/click.wav");
     m_Title->setCharacterSize(100);
     m_Title->setString("Breakout-ish");
     m_Title->setFont(m_Components->m_AssetManager->getFont("kenney-high"));
@@ -42,6 +44,8 @@ void MenuScene::processInput()
         if (m_Components->m_InputManager->isKeyPressed(sf::Keyboard::Up) ||
                 m_Components->m_InputManager->isKeyPressed(sf::Keyboard::Down))
         {
+            m_Components->m_AssetManager->playSound("click");
+
             if (m_MenuSelectedIndex == 0)
             {
                 m_MenuSelectedIndex = 1;
