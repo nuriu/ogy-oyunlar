@@ -3,7 +3,8 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include <Scene.hpp>
@@ -24,7 +25,11 @@ class MenuScene : public Scene
 
   private:
     std::shared_ptr<CoreComponents> m_Components;
-    std::unique_ptr<sf::CircleShape> m_Shape;
+    std::unique_ptr<sf::Text> m_Title;
+    std::unique_ptr<sf::Text> m_Start;
+    std::unique_ptr<sf::Text> m_HighScores;
+
+    unsigned int m_MenuSelectedIndex;
 };
 
 #endif // MENU_SCENE_HPP
