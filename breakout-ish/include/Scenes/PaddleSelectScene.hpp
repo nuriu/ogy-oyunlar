@@ -5,12 +5,14 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include <Scene.hpp>
 #include <CoreComponents.hpp>
 
 #include <memory>
+#include <vector>
 
 class PaddleSelectScene : public Scene
 {
@@ -28,6 +30,7 @@ class PaddleSelectScene : public Scene
     std::unique_ptr<sf::Text> m_Title;
     std::unique_ptr<sf::Text> m_LeftArrow;
     std::unique_ptr<sf::Text> m_RightArrow;
+    std::vector<sf::Sprite> m_Paddles;
 
     unsigned int m_SelectedPaddleIndex;
 };

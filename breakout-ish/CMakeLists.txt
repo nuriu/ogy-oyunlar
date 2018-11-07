@@ -15,23 +15,23 @@ else()
 endif (WIN32)
 
 set(HEADERS
-            include/CoreComponents.hpp
-            include/Game.hpp
+            include/Scenes/PaddleSelectScene.hpp
+            include/Scenes/MenuScene.hpp
             include/Scene.hpp
             include/Managers/SceneManager.hpp
             include/Managers/InputManager.hpp
             include/Managers/AssetManager.hpp
-            include/Scenes/MenuScene.hpp
-            include/Scenes/PaddleSelectScene.hpp)
+            include/CoreComponents.hpp
+            include/Game.hpp)
 
 set(SOURCES
-            src/main.cpp
-            src/Game.cpp
+            src/Scenes/PaddleSelectScene.cpp
+            src/Scenes/MenuScene.cpp
             src/Managers/SceneManager.cpp
             src/Managers/InputManager.cpp
             src/Managers/AssetManager.cpp
-            src/Scenes/MenuScene.cpp
-            src/Scenes/PaddleSelectScene.cpp)
+            src/Game.cpp
+            src/main.cpp)
 
 source_group("Headers" FILES ${HEADERS})
 source_group("Sources" FILES ${SOURCES})
