@@ -18,18 +18,18 @@ set(HEADERS
             include/CoreComponents.hpp
             include/Game.hpp
             include/Scene.hpp
-            include/SceneManager.hpp
-            include/InputManager.hpp
-            include/AssetManager.hpp
+            include/Managers/SceneManager.hpp
+            include/Managers/InputManager.hpp
+            include/Managers/AssetManager.hpp
             include/Scenes/MenuScene.hpp
             include/Scenes/PaddleSelectScene.hpp)
 
 set(SOURCES
             src/main.cpp
             src/Game.cpp
-            src/SceneManager.cpp
-            src/InputManager.cpp
-            src/AssetManager.cpp
+            src/Managers/SceneManager.cpp
+            src/Managers/InputManager.cpp
+            src/Managers/AssetManager.cpp
             src/Scenes/MenuScene.cpp
             src/Scenes/PaddleSelectScene.cpp)
 

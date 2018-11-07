@@ -5,7 +5,7 @@ PaddleSelectScene::PaddleSelectScene(const CoreComponents& components)
       m_Title(std::make_unique<sf::Text>()),
       m_LeftArrow(std::make_unique<sf::Text>()),
       m_RightArrow(std::make_unique<sf::Text>()),
-      m_MenuSelectedIndex(0) { }
+      m_SelectedPaddleIndex(0) { }
 
 void PaddleSelectScene::initialize()
 {

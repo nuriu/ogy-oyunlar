@@ -1,4 +1,4 @@
-#include <SceneManager.hpp>
+#include <Managers/SceneManager.hpp>
 
 void SceneManager::pushScene(ScenePtr scene, bool makeCurrent)
 {

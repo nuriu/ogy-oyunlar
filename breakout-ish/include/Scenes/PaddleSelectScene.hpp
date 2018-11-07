@@ -29,7 +29,7 @@ class PaddleSelectScene : public Scene
     std::unique_ptr<sf::Text> m_LeftArrow;
     std::unique_ptr<sf::Text> m_RightArrow;
 
-    unsigned int m_MenuSelectedIndex;
+    unsigned int m_SelectedPaddleIndex;
 };
 
 #endif // PADDLE_SELECT_SCENE_HPP
