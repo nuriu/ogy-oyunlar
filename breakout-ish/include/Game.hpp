@@ -6,7 +6,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include <CoreComponents.hpp>
-#include <MenuScene.hpp>
+#include <Scenes/MenuScene.hpp>
 
 #include <memory>
 

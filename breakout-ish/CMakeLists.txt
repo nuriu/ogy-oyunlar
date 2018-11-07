@@ -21,7 +21,8 @@ set(HEADERS
             include/SceneManager.hpp
             include/InputManager.hpp
             include/AssetManager.hpp
-            include/MenuScene.hpp)
+            include/Scenes/MenuScene.hpp
+            include/Scenes/PaddleSelectScene.hpp)
 
 set(SOURCES
             src/main.cpp
@@ -29,7 +30,8 @@ set(SOURCES
             src/SceneManager.cpp
             src/InputManager.cpp
             src/AssetManager.cpp
-            src/MenuScene.cpp)
+            src/Scenes/MenuScene.cpp
+            src/Scenes/PaddleSelectScene.cpp)
 
 source_group("Headers" FILES ${HEADERS})
 source_group("Sources" FILES ${SOURCES})

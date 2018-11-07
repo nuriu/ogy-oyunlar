@@ -1,5 +1,5 @@
-#ifndef MENU_SCENE_HPP
-#define MENU_SCENE_HPP
+#ifndef PADDLE_SELECT_SCENE_HPP
+#define PADDLE_SELECT_SCENE_HPP
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -11,12 +11,11 @@
 #include <CoreComponents.hpp>
 
 #include <memory>
-#include <iostream>
 
-class MenuScene : public Scene
+class PaddleSelectScene : public Scene
 {
   public:
-    MenuScene(std::shared_ptr<CoreComponents> components);
+    PaddleSelectScene(std::shared_ptr<CoreComponents> components);
 
     void initialize() override;
     void processInput() override;
@@ -26,10 +25,10 @@ class MenuScene : public Scene
   private:
     std::shared_ptr<CoreComponents> m_Components;
     std::unique_ptr<sf::Text> m_Title;
-    std::unique_ptr<sf::Text> m_Start;
-    std::unique_ptr<sf::Text> m_HighScores;
+    std::unique_ptr<sf::Text> m_LeftArrow;
+    std::unique_ptr<sf::Text> m_RightArrow;
 
     unsigned int m_MenuSelectedIndex;
 };
 
-#endif // MENU_SCENE_HPP
+#endif // PADDLE_SELECT_SCENE_HPP

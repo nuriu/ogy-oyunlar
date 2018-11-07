@@ -1,4 +1,4 @@
-#include <MenuScene.hpp>
+#include <Scenes/MenuScene.hpp>
 
 MenuScene::MenuScene(std::shared_ptr<CoreComponents> components)
     : m_Components(std::move(components)),
@@ -64,7 +64,9 @@ void MenuScene::processInput()
         {
             if (m_MenuSelectedIndex == 0)
             {
-                // TODO: paddle seçme sahnesine geç
+                m_Components->m_SceneManager->pushScene(
+                    ScenePtr(std::make_unique<PaddleSelectScene>(m_Components)), true
+                );
             }
             else
             {
