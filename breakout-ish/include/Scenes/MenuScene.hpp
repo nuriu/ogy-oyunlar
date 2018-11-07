@@ -16,7 +16,7 @@
 class MenuScene : public Scene
 {
   public:
-    MenuScene(std::shared_ptr<CoreComponents> components);
+    MenuScene(const CoreComponents& components);
 
     void initialize() override;
     void processInput() override;
@@ -24,7 +24,8 @@ class MenuScene : public Scene
     void render() const override;
 
   private:
-    std::shared_ptr<CoreComponents> m_Components;
+    const CoreComponents& m_Components;
+
     std::unique_ptr<sf::Text> m_Title;
     std::unique_ptr<sf::Text> m_Start;
     std::unique_ptr<sf::Text> m_HighScores;

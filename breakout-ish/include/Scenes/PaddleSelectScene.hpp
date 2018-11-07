@@ -15,7 +15,7 @@
 class PaddleSelectScene : public Scene
 {
   public:
-    PaddleSelectScene(std::shared_ptr<CoreComponents> components);
+    PaddleSelectScene(const CoreComponents& components);
 
     void initialize() override;
     void processInput() override;
@@ -23,7 +23,8 @@ class PaddleSelectScene : public Scene
     void render() const override;
 
   private:
-    std::shared_ptr<CoreComponents> m_Components;
+    const CoreComponents& m_Components;
+
     std::unique_ptr<sf::Text> m_Title;
     std::unique_ptr<sf::Text> m_LeftArrow;
     std::unique_ptr<sf::Text> m_RightArrow;
