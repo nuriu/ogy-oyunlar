@@ -1,5 +1,5 @@
-#ifndef PADDLE_SELECT_SCENE_HPP
-#define PADDLE_SELECT_SCENE_HPP
+#ifndef PLAY_SCENE_HPP
+#define PLAY_SCENE_HPP
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -10,15 +10,13 @@
 
 #include <Scene.hpp>
 #include <CoreComponents.hpp>
-#include <Scenes/PlayScene.hpp>
 
 #include <memory>
-#include <vector>
 
-class PaddleSelectScene : public Scene
+class PlayScene : public Scene
 {
   public:
-    PaddleSelectScene(const CoreComponents& components);
+    PlayScene(const CoreComponents& components, sf::Sprite paddle);
 
     void initialize() override;
     void processInput() override;
@@ -28,12 +26,7 @@ class PaddleSelectScene : public Scene
   private:
     const CoreComponents& m_Components;
 
-    std::unique_ptr<sf::Text> m_Title;
-    std::unique_ptr<sf::Text> m_LeftArrow;
-    std::unique_ptr<sf::Text> m_RightArrow;
-    std::vector<sf::Sprite> m_Paddles;
-
-    unsigned int m_SelectedPaddleIndex;
+    std::unique_ptr<sf::Sprite> m_Paddle;
 };
 
-#endif // PADDLE_SELECT_SCENE_HPP
+#endif // PLAY_SCENE_HPP

@@ -15,6 +15,7 @@ else()
 endif (WIN32)
 
 set(HEADERS
+            include/Scenes/PlayScene.hpp
             include/Scenes/PaddleSelectScene.hpp
             include/Scenes/MenuScene.hpp
             include/Scene.hpp
@@ -25,6 +26,7 @@ set(HEADERS
             include/Game.hpp)
 
 set(SOURCES
+            src/Scenes/PlayScene.cpp
             src/Scenes/PaddleSelectScene.cpp
             src/Scenes/MenuScene.cpp
             src/Managers/SceneManager.cpp

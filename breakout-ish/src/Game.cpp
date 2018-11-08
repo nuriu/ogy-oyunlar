@@ -27,6 +27,7 @@ void Game::run()
 {
     while (m_Components->m_RenderWindow->isOpen())
     {
+        m_Components->m_DeltaTime = m_Clock->restart().asSeconds();
         processEvents();
         update();
         render();
@@ -51,13 +52,12 @@ void Game::processEvents()
 
 void Game::update()
 {
-    m_Components->m_DeltaTime = m_Clock->restart().asSeconds();
     m_Components->m_SceneManager->getActiveScene()->update();
 }
 
 void Game::render()
 {
-    m_Components->m_RenderWindow->clear();
+    m_Components->m_RenderWindow->clear(sf::Color(35, 50, 60));
     m_Components->m_SceneManager->getActiveScene()->render();
     m_Components->m_RenderWindow->display();
 }

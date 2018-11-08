@@ -83,7 +83,6 @@ void MenuScene::update()
 
 void MenuScene::render() const
 {
-    m_Components.m_RenderWindow->clear(sf::Color(35, 50, 60));
     m_Components.m_RenderWindow->draw(*m_Title);
     m_Components.m_RenderWindow->draw(*m_Start);
     m_Components.m_RenderWindow->draw(*m_HighScores);

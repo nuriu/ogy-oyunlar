@@ -13,6 +13,8 @@ void PaddleSelectScene::initialize()
             "assets/spritesheets/paddles.png");
     m_Components.m_AssetManager->loadTexture("paddles-long",
             "assets/spritesheets/paddles-long.png");
+    m_Components.m_AssetManager->loadSound("select",
+                                           "assets/sounds/select.wav");
 
     for(int i = 0; i < 6; ++i)
     {
@@ -73,8 +75,7 @@ void PaddleSelectScene::processInput()
                 m_SelectedPaddleIndex = m_Paddles.size() - 1;
             }
         }
-
-        if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Right))
+        else if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Right))
         {
             m_Components.m_AssetManager->playSound("click");
 
@@ -82,6 +83,14 @@ void PaddleSelectScene::processInput()
             {
                 m_SelectedPaddleIndex = 0;
             }
+        }
+        else if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Enter))
+        {
+            m_Components.m_AssetManager->playSound("select");
+            m_Components.m_SceneManager->pushScene(
+                ScenePtr(std::make_unique<PlayScene>(m_Components,
+                         m_Paddles[m_SelectedPaddleIndex])), true
+            );
         }
     }
 }
@@ -92,7 +101,6 @@ void PaddleSelectScene::update()
 
 void PaddleSelectScene::render() const
 {
-    m_Components.m_RenderWindow->clear(sf::Color(35, 50, 60));
     m_Components.m_RenderWindow->draw(*m_Title);
     m_Components.m_RenderWindow->draw(*m_LeftArrow);
     m_Components.m_RenderWindow->draw(*m_RightArrow);
