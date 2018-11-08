@@ -27,6 +27,8 @@ class PlayScene : public Scene
     const CoreComponents& m_Components;
 
     std::unique_ptr<sf::Sprite> m_Paddle;
+
+    const float m_PaddleSpeed;
 };
 
 #endif // PLAY_SCENE_HPP

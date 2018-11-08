@@ -14,9 +14,11 @@ Game::Game(const sf::String& title, const unsigned int width,
     m_Components->m_RenderWindow = std::make_unique<sf::RenderWindow>(windowMode,
                                    title, sf::Style::Fullscreen);
 #else
-    m_Components->m_RenderWindow = std::make_unique<sf::RenderWindow>(
-                                       sf::VideoMode(width, height), title);
+    m_Components->m_RenderWindow =std::make_unique<sf::RenderWindow>
+                                  (sf::VideoMode(width, height), title,
+                                   sf::Style::Close);
 #endif
+    m_Components->m_RenderWindow->setVerticalSyncEnabled(true);
 
     m_Components->m_SceneManager->pushScene(
         ScenePtr(std::make_unique<MenuScene>(*m_Components)), true
