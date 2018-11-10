@@ -18,8 +18,6 @@ Game::Game(const sf::String& title, const unsigned int width,
                                   (sf::VideoMode(width, height), title,
                                    sf::Style::Close);
 #endif
-    m_Components->m_RenderWindow->setVerticalSyncEnabled(true);
-
     m_Components->m_SceneManager->pushScene(
         ScenePtr(std::make_unique<MenuScene>(*m_Components)), true
     );
@@ -29,20 +27,27 @@ void Game::run()
 {
     while (m_Components->m_RenderWindow->isOpen())
     {
-        m_Components->m_DeltaTime = m_Clock->restart().asSeconds();
-        processEvents();
-        update();
+        *m_Components->m_DeltaTime += m_Clock->restart();
+
+        while(*m_Components->m_DeltaTime >= *m_Components->m_TimePerFrame)
+        {
+            processEvents();
+            update();
+
+            *m_Components->m_DeltaTime -= *m_Components->m_TimePerFrame;
+        }
+
         render();
     }
 }
 
 void Game::processEvents()
 {
-    while (m_Components->m_RenderWindow->pollEvent(*m_Components->m_Event))
+    while (m_Components->m_RenderWindow->pollEvent(
+                *m_Components->m_InputManager->m_Event))
     {
-        if ((m_Components->m_Event->type == sf::Event::Closed) ||
-                ((m_Components->m_Event->type == sf::Event::KeyPressed) &&
-                 (m_Components->m_Event->key.code == sf::Keyboard::Escape)))
+        if (m_Components->m_InputManager->m_Event->type == sf::Event::Closed ||
+                m_Components->m_InputManager->isKeyPressed(sf::Keyboard::Escape))
         {
             m_Components->m_RenderWindow->close();
             break;

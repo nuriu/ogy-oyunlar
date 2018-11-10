@@ -39,41 +39,37 @@ void MenuScene::initialize()
 
 void MenuScene::processInput()
 {
-    if (m_Components.m_Event->type == sf::Event::KeyPressed)
+    if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Up) ||
+            m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Down))
     {
-        if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Up) ||
-                m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Down))
+        m_Components.m_AssetManager->playSound("click");
+
+        if (m_MenuSelectedIndex == 0)
         {
-            m_Components.m_AssetManager->playSound("click");
-
-            if (m_MenuSelectedIndex == 0)
-            {
-                m_MenuSelectedIndex = 1;
-                m_Start->setFillColor(sf::Color::White);
-                m_HighScores->setFillColor(sf::Color::Green);
-            }
-            else
-            {
-                m_MenuSelectedIndex = 0;
-                m_Start->setFillColor(sf::Color::Green);
-                m_HighScores->setFillColor(sf::Color::White);
-            }
+            m_MenuSelectedIndex = 1;
+            m_Start->setFillColor(sf::Color::White);
+            m_HighScores->setFillColor(sf::Color::Green);
         }
-
-        if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Enter))
+        else
         {
-            if (m_MenuSelectedIndex == 0)
-            {
-                m_Components.m_SceneManager->pushScene(
-                    ScenePtr(std::make_unique<PaddleSelectScene>(m_Components)), true
-                );
-            }
-            else
-            {
-                // TODO: yüksek skorlar sahnesine geç
-            }
+            m_MenuSelectedIndex = 0;
+            m_Start->setFillColor(sf::Color::Green);
+            m_HighScores->setFillColor(sf::Color::White);
         }
+    }
 
+    if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Enter))
+    {
+        if (m_MenuSelectedIndex == 0)
+        {
+            m_Components.m_SceneManager->pushScene(
+                ScenePtr(std::make_unique<PaddleSelectScene>(m_Components)), true
+            );
+        }
+        else
+        {
+            // TODO: yüksek skorlar sahnesine geç
+        }
     }
 }
 

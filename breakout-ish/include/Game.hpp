@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/System/Time.hpp>
 
 #include <CoreComponents.hpp>
 #include <Scenes/MenuScene.hpp>

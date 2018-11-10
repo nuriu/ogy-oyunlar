@@ -39,7 +39,7 @@ void PaddleSelectScene::initialize()
                                  m_Components.m_RenderWindow->getSize().y / 1.5f);
     }
 
-    m_Title->setCharacterSize(100);
+    m_Title->setCharacterSize(72);
     m_Title->setString("Select a paddle to start!");
     m_Title->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
     m_Title->setPosition(m_Components.m_RenderWindow->getSize().x / 2.f -
@@ -64,34 +64,31 @@ void PaddleSelectScene::initialize()
 
 void PaddleSelectScene::processInput()
 {
-    if (m_Components.m_Event->type == sf::Event::KeyPressed)
+    if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Left))
     {
-        if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Left))
-        {
-            m_Components.m_AssetManager->playSound("click");
+        m_Components.m_AssetManager->playSound("click");
 
-            if (--m_SelectedPaddleIndex == -1)
-            {
-                m_SelectedPaddleIndex = m_Paddles.size() - 1;
-            }
-        }
-        else if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Right))
+        if (--m_SelectedPaddleIndex == -1)
         {
-            m_Components.m_AssetManager->playSound("click");
+            m_SelectedPaddleIndex = m_Paddles.size() - 1;
+        }
+    }
+    else if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Right))
+    {
+        m_Components.m_AssetManager->playSound("click");
 
-            if (++m_SelectedPaddleIndex == m_Paddles.size())
-            {
-                m_SelectedPaddleIndex = 0;
-            }
-        }
-        else if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Enter))
+        if (++m_SelectedPaddleIndex == m_Paddles.size())
         {
-            m_Components.m_AssetManager->playSound("select");
-            m_Components.m_SceneManager->pushScene(
-                ScenePtr(std::make_unique<PlayScene>(m_Components,
-                         m_Paddles[m_SelectedPaddleIndex])), true
-            );
+            m_SelectedPaddleIndex = 0;
         }
+    }
+    else if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Enter))
+    {
+        m_Components.m_AssetManager->playSound("select");
+        m_Components.m_SceneManager->pushScene(
+            ScenePtr(std::make_unique<PlayScene>(m_Components,
+                        m_Paddles[m_SelectedPaddleIndex])), true
+        );
     }
 }
 
