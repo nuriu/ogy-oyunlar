@@ -5,11 +5,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include <Scene.hpp>
 #include <CoreComponents.hpp>
+#include <Entities/Paddle.hpp>
 
 #include <memory>
 
@@ -26,7 +26,7 @@ class PlayScene : public Scene
   private:
     const CoreComponents& m_Components;
 
-    std::unique_ptr<sf::Sprite> m_Paddle;
+    std::unique_ptr<Paddle> m_Player;
 
     const float m_PaddleSpeed;
 };
