@@ -19,7 +19,8 @@
 class Game
 {
   public:
-    Game(const sf::String &title, const unsigned int width, const unsigned int height);
+    Game(const sf::String& title, const unsigned int width,
+         const unsigned int height);
 
     void run();
 
@@ -31,25 +32,25 @@ class Game
 
   private:
     std::unique_ptr<sf::RenderWindow> m_Window;
-    std::unique_ptr<sf::Font> m_Font;
-    std::unique_ptr<sf::Text> m_Title;
-    std::unique_ptr<sf::Text> m_StatusText;
-    std::unique_ptr<sf::Text> m_PlayerOneScoreText;
-    std::unique_ptr<sf::Text> m_PlayerTwoScoreText;
-    std::unique_ptr<Paddle> m_PlayerOne;
-    std::unique_ptr<Paddle> m_PlayerTwo;
-    std::unique_ptr<Paddle> m_Ball;
+    std::unique_ptr<sf::Font>         m_Font;
+    std::unique_ptr<sf::Text>         m_Title;
+    std::unique_ptr<sf::Text>         m_StatusText;
+    std::unique_ptr<sf::Text>         m_PlayerOneScoreText;
+    std::unique_ptr<sf::Text>         m_PlayerTwoScoreText;
+    std::unique_ptr<Paddle>           m_PlayerOne;
+    std::unique_ptr<Paddle>           m_PlayerTwo;
+    std::unique_ptr<Paddle>           m_Ball;
 
     sf::Clock m_Clock;
 
     float m_BallAngle;
-    int m_PlayerOneScore = 0;
-    int m_PlayerTwoScore = 0;
-    bool m_IsPlaying;
+    int   m_PlayerOneScore = 0;
+    int   m_PlayerTwoScore = 0;
+    bool  m_IsPlaying;
 
     const float paddleSpeed = 500.f;
-    const float ballSpeed = 300.f;
-    const float pi = 3.14159f;
+    const float ballSpeed   = 300.f;
+    const float pi          = 3.14159f;
 };
 
 #endif

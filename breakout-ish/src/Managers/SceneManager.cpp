@@ -16,7 +16,6 @@ void SceneManager::pushScene(ScenePtr scene, bool makeCurrent)
 
     m_Scenes.push(std::move(scene));
     m_Scenes.top()->initialize();
-
 }
 
 void SceneManager::popScene()
@@ -32,7 +31,4 @@ void SceneManager::popScene()
     }
 }
 
-ScenePtr& SceneManager::getActiveScene()
-{
-    return m_Scenes.top();
-}
+ScenePtr& SceneManager::getActiveScene() { return m_Scenes.top(); }

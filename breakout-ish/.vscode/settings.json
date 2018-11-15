@@ -42,6 +42,7 @@
         "chrono": "cpp",
         "list": "cpp",
         "numeric": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "map": "cpp"
     }
 }

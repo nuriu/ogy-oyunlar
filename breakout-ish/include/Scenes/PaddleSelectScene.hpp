@@ -31,7 +31,7 @@ class PaddleSelectScene : public Scene
     std::unique_ptr<sf::Text> m_Title;
     std::unique_ptr<sf::Text> m_LeftArrow;
     std::unique_ptr<sf::Text> m_RightArrow;
-    std::vector<sf::Sprite> m_Paddles;
+    std::vector<sf::Sprite>   m_Paddles;
 
     unsigned int m_SelectedPaddleIndex;
 };

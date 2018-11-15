@@ -22,7 +22,7 @@ class Game
 
   private:
     std::shared_ptr<CoreComponents> m_Components;
-    std::unique_ptr<sf::Clock> m_Clock;
+    std::unique_ptr<sf::Clock>      m_Clock;
 
     void processEvents();
     void update();

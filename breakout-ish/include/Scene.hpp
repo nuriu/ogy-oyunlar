@@ -5,14 +5,14 @@
 class Scene
 {
   public:
-    virtual void initialize() = 0;
+    virtual void initialize()   = 0;
     virtual void processInput() = 0;
-    virtual void update() = 0;
+    virtual void update()       = 0;
     virtual void render() const = 0;
-    virtual void pause() { }
-    virtual void resume() { }
+    virtual void pause() {}
+    virtual void resume() {}
 
-    virtual ~Scene() { }
+    virtual ~Scene() {}
 };
 
 #endif // SCENE_HPP
