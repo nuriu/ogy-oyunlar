@@ -12,6 +12,9 @@
 class Ball : public sf::Sprite, public Entity
 {
   public:
+    float m_DeltaX;
+    float m_DeltaY;
+
     explicit Ball(const CoreComponents& components);
 
     void initialize() override;
@@ -19,11 +22,13 @@ class Ball : public sf::Sprite, public Entity
     void update() override;
     void render() const override;
 
+    bool isColliding(const sf::Sprite& target) const;
+    void reset();
+
   private:
     const CoreComponents& m_Components;
-    const float           m_BallSpeed;
-    const float           m_Width  = 16;
-    const float           m_Height = 16;
+    const float           m_Width  = 16.0f;
+    const float           m_Height = 16.0f;
 
     std::random_device                 m_RandomDevice;
     std::mt19937                       m_MTGenerator;
