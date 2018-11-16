@@ -3,9 +3,7 @@
 #pragma once
 
 #include <memory>
-#include <cmath>
-#include <ctime>
-#include <cstdlib>
+#include <random>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -39,6 +37,10 @@ class Game
     std::unique_ptr<Paddle>           m_PlayerOne;
     std::unique_ptr<Paddle>           m_PlayerTwo;
     std::unique_ptr<Paddle>           m_Ball;
+
+    std::random_device                 m_RandomDevice;
+    std::mt19937                       m_MTGenerator;
+    std::uniform_int_distribution<int> m_Distributor;
 
     sf::Clock m_Clock;
 

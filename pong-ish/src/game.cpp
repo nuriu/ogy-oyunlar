@@ -3,6 +3,7 @@
 // #define GAME_FULLSCREEN
 
 Game::Game(const sf::String& title, const unsigned int width, const unsigned int height)
+    : m_RandomDevice(), m_MTGenerator(m_RandomDevice()), m_Distributor(0, 360)
 {
 #ifdef GAME_FULLSCREEN
     auto desktop    = sf::VideoMode::getDesktopMode();
@@ -56,8 +57,6 @@ Game::Game(const sf::String& title, const unsigned int width, const unsigned int
         sf::Vector2f(m_Window->getSize().x / 2.0f - 5, m_Window->getSize().y / 2.0f - 5),
         sf::Color::White);
 
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
     m_IsPlaying = true;
 
     initGameRound();
@@ -93,7 +92,7 @@ void Game::initGameRound()
     // kaynak: SFML pong örneği "SFML_DIR/examples/pong"
     do
     {
-        m_BallAngle = (std::rand() % 360) * 2 * pi / 360;
+        m_BallAngle = m_Distributor(m_MTGenerator) * 2 * pi / 360;
     } while (std::abs(std::cos(m_BallAngle)) < 0.7f);
 }
 
@@ -225,11 +224,11 @@ void Game::update()
             // topun çarpışma sonrası yönü
             if (m_Ball->getPosition().y > m_PlayerOne->getPosition().y)
             {
-                m_BallAngle = pi - m_BallAngle + (std::rand() % 20) * pi / 180;
+                m_BallAngle = pi - m_BallAngle + (m_Distributor(m_MTGenerator) % 20) * pi / 180;
             }
             else
             {
-                m_BallAngle = pi - m_BallAngle - (std::rand() % 20) * pi / 180;
+                m_BallAngle = pi - m_BallAngle - (m_Distributor(m_MTGenerator) % 20) * pi / 180;
             }
 
             m_Ball->setPosition(m_PlayerOne->getPosition().x + m_Ball->getSize().x + 0.1f,
@@ -246,11 +245,11 @@ void Game::update()
             // topun çarpışma sonrası yönü
             if (m_Ball->getPosition().y > m_PlayerTwo->getPosition().y)
             {
-                m_BallAngle = pi - m_BallAngle + (std::rand() % 20) * pi / 180;
+                m_BallAngle = pi - m_BallAngle + (m_Distributor(m_MTGenerator) % 20) * pi / 180;
             }
             else
             {
-                m_BallAngle = pi - m_BallAngle - (std::rand() % 20) * pi / 180;
+                m_BallAngle = pi - m_BallAngle - (m_Distributor(m_MTGenerator) % 20) * pi / 180;
             }
 
             m_Ball->setPosition(m_PlayerTwo->getPosition().x - m_Ball->getSize().x - 0.1f,
