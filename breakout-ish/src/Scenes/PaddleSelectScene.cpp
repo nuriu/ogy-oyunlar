@@ -81,8 +81,7 @@ void PaddleSelectScene::processInput()
     {
         m_Components.m_AssetManager->playSound("select");
         m_Components.m_SceneManager->pushScene(
-            ScenePtr(std::make_unique<PlayScene>(m_Components, m_Paddles[m_SelectedPaddleIndex])),
-            true);
+            ScenePtr(std::make_unique<PlayScene>(m_Components, m_SelectedPaddleIndex)), true);
     }
 }
 

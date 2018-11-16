@@ -4,10 +4,24 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-class Paddle : public sf::Sprite
+#include <Entity.hpp>
+#include <CoreComponents.hpp>
+
+class Paddle : public sf::Sprite, public Entity
 {
   public:
-    explicit Paddle(sf::Sprite paddle);
+    explicit Paddle(const CoreComponents& components, unsigned int selectedPaddleIndex);
+
+    void initialize() override;
+    void processInput() override;
+    void update() override;
+    void render() const override;
+
+  private:
+    const CoreComponents& m_Components;
+    const float           m_PaddleSpeed;
+    float                 m_Width;
+    float                 m_Height;
 };
 
 #endif // PADDLE_HPP

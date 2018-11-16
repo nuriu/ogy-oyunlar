@@ -16,7 +16,7 @@
 class PlayScene : public Scene
 {
   public:
-    PlayScene(const CoreComponents& components, sf::Sprite paddle);
+    PlayScene(const CoreComponents& components, unsigned int selectedPaddleIndex);
 
     void initialize() override;
     void processInput() override;
@@ -27,8 +27,6 @@ class PlayScene : public Scene
     const CoreComponents& m_Components;
 
     std::unique_ptr<Paddle> m_Player;
-
-    const float m_PaddleSpeed;
 };
 
 #endif // PLAY_SCENE_HPP

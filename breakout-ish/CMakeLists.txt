@@ -19,6 +19,7 @@ set(HEADERS
             include/Scenes/PlayScene.hpp
             include/Scenes/PaddleSelectScene.hpp
             include/Scenes/MenuScene.hpp
+            include/Entity.hpp
             include/Scene.hpp
             include/Managers/SceneManager.hpp
             include/Managers/InputManager.hpp
