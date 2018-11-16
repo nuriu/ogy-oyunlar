@@ -4,7 +4,7 @@ void AssetManager::loadFont(const std::string& name, const std::string& path)
 {
     auto font = std::make_unique<sf::Font>();
 
-    if (font->loadFromFile("assets/" + path))
+    if (font->loadFromFile(m_Directory + path))
     {
         m_Fonts[name] = *font;
     }
@@ -14,7 +14,7 @@ void AssetManager::loadSound(const std::string& name, const std::string& path)
 {
     auto buffer = std::make_unique<sf::SoundBuffer>();
 
-    if (buffer->loadFromFile("assets/" + path))
+    if (buffer->loadFromFile(m_Directory + path))
     {
         m_SoundBuffers[name] = *buffer;
         m_Sounds[name]       = sf::Sound(m_SoundBuffers[name]);
@@ -25,7 +25,7 @@ void AssetManager::loadTexture(const std::string& name, const std::string& path)
 {
     auto texture = std::make_unique<sf::Texture>();
 
-    if (texture->loadFromFile("assets/" + path))
+    if (texture->loadFromFile(m_Directory + path))
     {
         m_Textures[name] = *texture;
     }

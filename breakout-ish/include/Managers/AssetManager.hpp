@@ -30,6 +30,8 @@ class AssetManager
     std::map<std::string, sf::Sound>       m_Sounds;
     std::map<std::string, sf::Texture>     m_Textures;
     std::map<std::string, sf::SoundBuffer> m_SoundBuffers;
+
+    const std::string m_Directory = "assets/";
 };
 
 #endif // ASSET_MANAGER_HPP
