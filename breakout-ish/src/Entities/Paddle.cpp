@@ -6,12 +6,12 @@ Paddle::Paddle(const CoreComponents& components, const unsigned int selectedPadd
     if (selectedPaddleIndex < 3)
     {
         setTexture(m_Components.m_AssetManager->getTexture("paddles"));
-        setTextureRect(sf::IntRect(0, selectedPaddleIndex * 30, 125, 30));
+        setTextureRect(sf::IntRect(0, selectedPaddleIndex * 24, 100, 24));
     }
     else
     {
         setTexture(m_Components.m_AssetManager->getTexture("paddles-long"));
-        setTextureRect(sf::IntRect(0, (selectedPaddleIndex - 3) * 30, 155, 30));
+        setTextureRect(sf::IntRect(0, (selectedPaddleIndex - 3) * 24, 124, 24));
     }
 }
 
@@ -19,7 +19,7 @@ void Paddle::initialize()
 {
     setOrigin(getLocalBounds().width / 2.0f, getLocalBounds().height / 2.0f);
     setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f,
-                m_Components.m_RenderWindow->getSize().y - 50.0f);
+                m_Components.m_RenderWindow->getSize().y - 25.0f);
 
     m_Width  = getLocalBounds().width;
     m_Height = getLocalBounds().height;

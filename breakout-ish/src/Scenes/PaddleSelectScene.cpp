@@ -20,12 +20,12 @@ void PaddleSelectScene::initialize()
         if (i < 3)
         {
             m_Paddles.emplace_back(m_Components.m_AssetManager->getTexture("paddles"),
-                                   sf::IntRect(0, i * 30, 125, 30));
+                                   sf::IntRect(0, i * 24, 100, 24));
         }
         else
         {
             m_Paddles.emplace_back(m_Components.m_AssetManager->getTexture("paddles-long"),
-                                   sf::IntRect(0, (i - 3) * 30, 155, 30));
+                                   sf::IntRect(0, (i - 3) * 24, 124, 24));
         }
 
         m_Paddles[i].setOrigin(m_Paddles[i].getLocalBounds().width / 2.0f,

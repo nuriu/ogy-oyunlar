@@ -15,25 +15,25 @@ while getopts 'f:v' flag; do
 done
 
 if [[ -n ${file} ]]; then
-  echo ""
-  printf "clang-tidy results:\n\n"
+  # echo ""
+  # printf "clang-tidy results:\n\n"
 
-  clang-tidy $file -checks=* -- -I include/
+  # clang-tidy $file -checks=* -- -I include/
 
-  echo ""
-  echo "-----------------------"
+  # echo ""
+  # echo "-----------------------"
 
   printf "\ncppcheck results:\n\n"
 
   cppcheck $file -I include/ --enable=all --inconclusive --quiet
 else
-  echo ""
-  printf "clang-tidy results:\n\n"
+  # echo ""
+  # printf "clang-tidy results:\n\n"
 
-  clang-tidy src/* -checks=bugprone-*,cert-*,cppcoreguidelines-*,clang-analyzer-*,hicpp-*,misc-*,modernize-*,performance-*,portability-*,readability-* -- -I include/
+  # clang-tidy src/* -checks=bugprone-*,cert-*,cppcoreguidelines-*,clang-analyzer-*,hicpp-*,misc-*,modernize-*,performance-*,portability-*,readability-* -- -I include/
 
-  echo ""
-  echo "-----------------------"
+  # echo ""
+  # echo "-----------------------"
 
   printf "\ncppcheck results:\n\n"
 

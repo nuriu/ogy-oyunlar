@@ -10,6 +10,7 @@
 #include <Scene.hpp>
 #include <CoreComponents.hpp>
 #include <Entities/Paddle.hpp>
+#include <Entities/Ball.hpp>
 
 #include <memory>
 
@@ -27,6 +28,7 @@ class PlayScene : public Scene
     const CoreComponents& m_Components;
 
     std::unique_ptr<Paddle> m_Player;
+    std::unique_ptr<Ball>   m_Ball;
 };
 
 #endif // PLAY_SCENE_HPP
