@@ -11,8 +11,7 @@
 class Paddle : public sf::RectangleShape
 {
   public:
-    Paddle(const sf::Vector2f& size, const sf::Vector2f& position,
-           const sf::Color& color);
+    Paddle(const sf::Vector2f& size, const sf::Vector2f& position, const sf::Color& color);
 };
 
 #endif

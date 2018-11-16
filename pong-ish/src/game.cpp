@@ -2,18 +2,15 @@
 
 // #define GAME_FULLSCREEN
 
-Game::Game(const sf::String& title, const unsigned int width,
-           const unsigned int height)
+Game::Game(const sf::String& title, const unsigned int width, const unsigned int height)
 {
 #ifdef GAME_FULLSCREEN
-    auto desktop = sf::VideoMode::getDesktopMode();
-    auto windowMode =
-        sf::VideoMode(desktop.width, desktop.height, desktop.bitsPerPixel);
-    m_Window = std::make_unique<sf::RenderWindow>(windowMode, title,
-                                                  sf::Style::Fullscreen);
+    auto desktop    = sf::VideoMode::getDesktopMode();
+    auto windowMode = sf::VideoMode(desktop.width, desktop.height, desktop.bitsPerPixel);
+    m_Window        = std::make_unique<sf::RenderWindow>(windowMode, title, sf::Style::Fullscreen);
 #else
-    m_Window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height),
-                                                  title, sf::Style::Close);
+    sf::VideoMode vm(width, height);
+    m_Window = std::make_unique<sf::RenderWindow>(vm, title, sf::Style::Close);
 #endif
 
     m_Window->setVerticalSyncEnabled(true);
@@ -35,36 +32,31 @@ Game::Game(const sf::String& title, const unsigned int width,
     m_PlayerOneScoreText->setFillColor(sf::Color::White);
     m_PlayerTwoScoreText->setFillColor(sf::Color::White);
 
-    m_Title->setCharacterSize(40.f);
-    m_StatusText->setCharacterSize(20.f);
-    m_PlayerOneScoreText->setCharacterSize(50.f);
-    m_PlayerTwoScoreText->setCharacterSize(50.f);
+    m_Title->setCharacterSize(40);
+    m_StatusText->setCharacterSize(20);
+    m_PlayerOneScoreText->setCharacterSize(50);
+    m_PlayerTwoScoreText->setCharacterSize(50);
 
-    m_Title->setPosition(sf::Vector2f(m_Window->getSize().x / 2 - 110, 20));
-    m_StatusText->setPosition(
-        sf::Vector2f(m_Window->getSize().x / 2 - 50, 100));
-    m_PlayerOneScoreText->setPosition(
-        sf::Vector2f(m_Window->getSize().x / 4 - 20, 150));
-    m_PlayerTwoScoreText->setPosition(
-        sf::Vector2f(m_Window->getSize().x / 4 * 3, 150));
+    m_Title->setPosition(sf::Vector2f(m_Window->getSize().x / 2.0f - 110, 20));
+    m_StatusText->setPosition(sf::Vector2f(m_Window->getSize().x / 2.0f - 50, 100));
+    m_PlayerOneScoreText->setPosition(sf::Vector2f(m_Window->getSize().x / 4.0f - 20, 150));
+    m_PlayerTwoScoreText->setPosition(sf::Vector2f(m_Window->getSize().x / 4.0f * 3, 150));
 
-    m_PlayerOne = std::make_unique<Paddle>(
-        sf::Vector2f(10, 100), sf::Vector2f(10, m_Window->getSize().y / 2 - 50),
-        sf::Color::Magenta);
+    m_PlayerOne = std::make_unique<Paddle>(sf::Vector2f(10, 100),
+                                           sf::Vector2f(10, m_Window->getSize().y / 2.0f - 50),
+                                           sf::Color::Magenta);
 
-    m_PlayerTwo =
-        std::make_unique<Paddle>(sf::Vector2f(10, 100),
-                                 sf::Vector2f(m_Window->getSize().x - 20,
-                                              m_Window->getSize().y / 2 - 50),
-                                 sf::Color::Cyan);
+    m_PlayerTwo = std::make_unique<Paddle>(
+        sf::Vector2f(10, 100),
+        sf::Vector2f(m_Window->getSize().x - 20, m_Window->getSize().y / 2.0f - 50),
+        sf::Color::Cyan);
 
-    m_Ball =
-        std::make_unique<Paddle>(sf::Vector2f(10, 10),
-                                 sf::Vector2f(m_Window->getSize().x / 2 - 5,
-                                              m_Window->getSize().y / 2 - 5),
-                                 sf::Color::White);
+    m_Ball = std::make_unique<Paddle>(
+        sf::Vector2f(10, 10),
+        sf::Vector2f(m_Window->getSize().x / 2.0f - 5, m_Window->getSize().y / 2.0f - 5),
+        sf::Color::White);
 
-    std::srand(static_cast<unsigned int>(std::time(NULL)));
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     m_IsPlaying = true;
 
@@ -89,13 +81,13 @@ void Game::run()
 void Game::initGameRound()
 {
     // oyuncuların ve topun konumlarını varsayılan değerlerine çekiyoruz
-    m_PlayerOne->setPosition(sf::Vector2f(10, m_Window->getSize().y / 2 - 50));
+    m_PlayerOne->setPosition(sf::Vector2f(10, m_Window->getSize().y / 2.0f - 50));
 
-    m_PlayerTwo->setPosition(sf::Vector2f(m_Window->getSize().x - 20,
-                                          m_Window->getSize().y / 2 - 50));
+    m_PlayerTwo->setPosition(
+        sf::Vector2f(m_Window->getSize().x - 20, m_Window->getSize().y / 2.0f - 50));
 
-    m_Ball->setPosition(sf::Vector2f(m_Window->getSize().x / 2 - 5,
-                                     m_Window->getSize().y / 2 - 5));
+    m_Ball->setPosition(
+        sf::Vector2f(m_Window->getSize().x / 2.0f - 5, m_Window->getSize().y / 2.0f - 5));
 
     // topun ilk atışta sahip olacağı açıyı yeniden hesaplıyoruz
     // kaynak: SFML pong örneği "SFML_DIR/examples/pong"
@@ -107,19 +99,17 @@ void Game::initGameRound()
 
 void Game::processEvents()
 {
-    sf::Event event;
+    sf::Event event{};
     while (m_Window->pollEvent(event))
     {
         if ((event.type == sf::Event::Closed) ||
-            ((event.type == sf::Event::KeyPressed) &&
-             (event.key.code == sf::Keyboard::Escape)))
+            ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
         {
             m_Window->close();
             break;
         }
 
-        if ((event.type == sf::Event::KeyPressed) &&
-            (event.key.code == sf::Keyboard::Space))
+        if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
         {
             if (!m_IsPlaying)
             {
@@ -130,14 +120,11 @@ void Game::processEvents()
                 m_PlayerOneScore = 0;
                 m_PlayerTwoScore = 0;
 
-                m_PlayerOneScoreText->setString(
-                    std::to_string(m_PlayerOneScore));
-                m_PlayerTwoScoreText->setString(
-                    std::to_string(m_PlayerTwoScore));
+                m_PlayerOneScoreText->setString(std::to_string(m_PlayerOneScore));
+                m_PlayerTwoScoreText->setString(std::to_string(m_PlayerTwoScore));
 
                 m_StatusText->setString("Playing");
-                m_StatusText->setPosition(
-                    sf::Vector2f(m_Window->getSize().x / 2 - 50, 100));
+                m_StatusText->setPosition(sf::Vector2f(m_Window->getSize().x / 2.0f - 50, 100));
 
                 initGameRound();
             }
@@ -151,28 +138,24 @@ void Game::update()
 
     // paddle hareket güncellemeleri
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) &&
-            m_PlayerOne->getPosition().y > 0.f)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && m_PlayerOne->getPosition().y > 0.f)
         {
             m_PlayerOne->move(0.f, -paddleSpeed * deltaTime);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
-            m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y <
-                m_Window->getSize().y)
+            m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y < m_Window->getSize().y)
         {
             m_PlayerOne->move(0.f, paddleSpeed * deltaTime);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
-            m_PlayerTwo->getPosition().y > 0.f)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_PlayerTwo->getPosition().y > 0.f)
         {
             m_PlayerTwo->move(0.f, -paddleSpeed * deltaTime);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
-            m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y <
-                m_Window->getSize().y)
+            m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y < m_Window->getSize().y)
         {
             m_PlayerTwo->move(0.f, paddleSpeed * deltaTime);
         }
@@ -187,18 +170,15 @@ void Game::update()
         if (m_Ball->getPosition().y < 0.f)
         {
             m_BallAngle = -m_BallAngle;
-            m_Ball->setPosition(m_Ball->getPosition().x,
-                                m_Ball->getSize().y + 0.1f);
+            m_Ball->setPosition(m_Ball->getPosition().x, m_Ball->getSize().y + 0.1f);
         }
 
         // ekranın altına çarpma durumu
-        if (m_Ball->getPosition().y + m_Ball->getSize().y >
-            m_Window->getSize().y)
+        if (m_Ball->getPosition().y + m_Ball->getSize().y > m_Window->getSize().y)
         {
             m_BallAngle = -m_BallAngle;
             m_Ball->setPosition(m_Ball->getPosition().x,
-                                m_Window->getSize().y - m_Ball->getSize().y -
-                                    0.1f);
+                                m_Window->getSize().y - m_Ball->getSize().y - 0.1f);
         }
 
         // ekranın sol sınırını geçme durumu
@@ -210,10 +190,8 @@ void Game::update()
 
             if (m_PlayerTwoScore == 10)
             {
-                m_StatusText->setString(
-                    "Player Two Won! Press Space to restart.");
-                m_StatusText->setPosition(
-                    sf::Vector2f(m_Window->getSize().x / 3 - 25, 100));
+                m_StatusText->setString("Player Two Won! Press Space to restart.");
+                m_StatusText->setPosition(sf::Vector2f(m_Window->getSize().x / 3.0f - 25, 100));
                 m_IsPlaying = false;
             }
 
@@ -222,18 +200,15 @@ void Game::update()
 
         // ekranın sağ sınırını geçme durumu
         // m_PlayerOne 1 skor puanı alır
-        if (m_Ball->getPosition().x + m_Ball->getSize().x >
-            m_Window->getSize().x)
+        if (m_Ball->getPosition().x + m_Ball->getSize().x > m_Window->getSize().x)
         {
             m_PlayerOneScore++;
             m_PlayerOneScoreText->setString(std::to_string(m_PlayerOneScore));
 
             if (m_PlayerOneScore == 10)
             {
-                m_StatusText->setString(
-                    "Player One Won! Press Space to restart.");
-                m_StatusText->setPosition(
-                    sf::Vector2f(m_Window->getSize().x / 3 - 25, 100));
+                m_StatusText->setString("Player One Won! Press Space to restart.");
+                m_StatusText->setPosition(sf::Vector2f(m_Window->getSize().x / 3.0f - 25, 100));
                 m_IsPlaying = false;
             }
 
@@ -242,14 +217,10 @@ void Game::update()
 
         // AABB çarpışma tanılama
         // m_PlayerOne (sol paddle) ile çarpışma durumu
-        if (m_Ball->getPosition().x <=
-                m_PlayerOne->getPosition().x + m_PlayerOne->getSize().x &&
-            m_Ball->getPosition().x + m_Ball->getSize().x >=
-                m_PlayerOne->getPosition().x &&
-            m_Ball->getPosition().y <=
-                m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y &&
-            m_Ball->getPosition().y + m_Ball->getSize().y >=
-                m_PlayerOne->getPosition().y)
+        if (m_Ball->getPosition().x <= m_PlayerOne->getPosition().x + m_PlayerOne->getSize().x &&
+            m_Ball->getPosition().x + m_Ball->getSize().x >= m_PlayerOne->getPosition().x &&
+            m_Ball->getPosition().y <= m_PlayerOne->getPosition().y + m_PlayerOne->getSize().y &&
+            m_Ball->getPosition().y + m_Ball->getSize().y >= m_PlayerOne->getPosition().y)
         {
             // topun çarpışma sonrası yönü
             if (m_Ball->getPosition().y > m_PlayerOne->getPosition().y)
@@ -261,20 +232,16 @@ void Game::update()
                 m_BallAngle = pi - m_BallAngle - (std::rand() % 20) * pi / 180;
             }
 
-            m_Ball->setPosition(m_PlayerOne->getPosition().x +
-                                    m_Ball->getSize().x + 0.1f,
+            m_Ball->setPosition(m_PlayerOne->getPosition().x + m_Ball->getSize().x + 0.1f,
                                 m_Ball->getPosition().y);
         }
 
         // m_PlayerTwo (sağ paddle) ile çarpışma durumu
-        if (m_Ball->getPosition().x + m_Ball->getSize().x >=
-                m_PlayerTwo->getPosition().x &&
+        if (m_Ball->getPosition().x + m_Ball->getSize().x >= m_PlayerTwo->getPosition().x &&
             m_Ball->getPosition().x + m_Ball->getSize().x <=
                 m_PlayerTwo->getPosition().x + m_PlayerTwo->getSize().x &&
-            m_Ball->getPosition().y + m_Ball->getSize().y >=
-                m_PlayerTwo->getPosition().y &&
-            m_Ball->getPosition().y <=
-                m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y)
+            m_Ball->getPosition().y + m_Ball->getSize().y >= m_PlayerTwo->getPosition().y &&
+            m_Ball->getPosition().y <= m_PlayerTwo->getPosition().y + m_PlayerTwo->getSize().y)
         {
             // topun çarpışma sonrası yönü
             if (m_Ball->getPosition().y > m_PlayerTwo->getPosition().y)
@@ -286,8 +253,7 @@ void Game::update()
                 m_BallAngle = pi - m_BallAngle - (std::rand() % 20) * pi / 180;
             }
 
-            m_Ball->setPosition(m_PlayerTwo->getPosition().x -
-                                    m_Ball->getSize().x - 0.1f,
+            m_Ball->setPosition(m_PlayerTwo->getPosition().x - m_Ball->getSize().x - 0.1f,
                                 m_Ball->getPosition().y);
         }
     }
