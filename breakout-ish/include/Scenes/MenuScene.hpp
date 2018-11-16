@@ -16,7 +16,7 @@
 class MenuScene : public Scene
 {
   public:
-    MenuScene(const CoreComponents& components);
+    explicit MenuScene(const CoreComponents& components);
 
     void initialize() override;
     void processInput() override;

@@ -18,7 +18,7 @@
 class PaddleSelectScene : public Scene
 {
   public:
-    PaddleSelectScene(const CoreComponents& components);
+    explicit PaddleSelectScene(const CoreComponents& components);
 
     void initialize() override;
     void processInput() override;

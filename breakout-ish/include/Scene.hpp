@@ -12,7 +12,7 @@ class Scene
     virtual void pause() {}
     virtual void resume() {}
 
-    virtual ~Scene() {}
+    virtual ~Scene() = default;
 };
 
 #endif // SCENE_HPP

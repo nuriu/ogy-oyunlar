@@ -13,18 +13,14 @@
 
 struct CoreComponents
 {
-    std::unique_ptr<SceneManager> m_SceneManager =
-        std::make_unique<SceneManager>();
-    std::unique_ptr<InputManager> m_InputManager =
-        std::make_unique<InputManager>();
-    std::unique_ptr<AssetManager> m_AssetManager =
-        std::make_unique<AssetManager>();
+    std::unique_ptr<SceneManager> m_SceneManager = std::make_unique<SceneManager>();
+    std::unique_ptr<InputManager> m_InputManager = std::make_unique<InputManager>();
+    std::unique_ptr<AssetManager> m_AssetManager = std::make_unique<AssetManager>();
 
     std::unique_ptr<sf::RenderWindow> m_RenderWindow;
-    std::unique_ptr<sf::Time>         m_DeltaTime =
-        std::make_unique<sf::Time>(sf::Time::Zero);
-    const std::unique_ptr<sf::Time> m_TimePerFrame =
-        std::make_unique<sf::Time>(sf::seconds(1.f / 60.f));
+    std::unique_ptr<sf::Time>         m_DeltaTime = std::make_unique<sf::Time>(sf::Time::Zero);
+    const std::unique_ptr<sf::Time>   m_TimePerFrame =
+        std::make_unique<sf::Time>(sf::seconds(1.0f / 60.f));
 };
 
 #endif // CORE_COMPONENTS_HPP

@@ -7,7 +7,7 @@
 class Paddle : public sf::Sprite
 {
   public:
-    Paddle(const sf::Sprite paddle);
+    explicit Paddle(sf::Sprite paddle);
 };
 
 #endif // PADDLE_HPP
