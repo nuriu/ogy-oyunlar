@@ -7,8 +7,11 @@ PlayScene::PlayScene(const CoreComponents& components, const unsigned int select
     , m_RandomDevice()
     , m_MTGenerator(m_RandomDevice())
     , m_Distributor(100.0f, 150.0f)
+    , m_ScoreText(std::make_unique<sf::Text>())
     , m_Health(3)
     , m_IsPlaying(false)
+    , m_Score(0)
+
 {
 }
 
@@ -41,6 +44,11 @@ void PlayScene::initialize()
         m_Hearts.back().setPosition(
             m_Components.m_RenderWindow->getSize().x - 124.0f + (i + 1) * 16, 32.0f);
     }
+
+    m_ScoreText->setCharacterSize(32);
+    m_ScoreText->setString("Score: " + std::to_string(m_Score));
+    m_ScoreText->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
+    m_ScoreText->setPosition(64.0f, 24.0f);
 }
 
 void PlayScene::processInput()
@@ -94,7 +102,8 @@ void PlayScene::update()
 
                 m_Bricks.erase(m_Bricks.begin() + i);
                 m_Components.m_AssetManager->playSound("impact");
-
+                m_Score += 10;
+                m_ScoreText->setString("Score: " + std::to_string(m_Score));
                 break;
             }
         }
@@ -120,17 +129,24 @@ void PlayScene::update()
         {
             m_Ball->reset();
 
-            if (m_Health-- <= 0)
+            if (--m_Health < 1)
             {
                 // TODO: game over
+                m_IsPlaying = false;
+                m_Player->reset();
             }
-            else
-            {
-                m_Hearts.at(static_cast<unsigned long>(m_Health))
-                    .setTextureRect(sf::IntRect(14, 0, 14, 13));
 
-                m_Components.m_AssetManager->playSound("death");
-            }
+            m_Hearts.at(static_cast<unsigned long>(m_Health))
+                .setTextureRect(sf::IntRect(14, 0, 14, 13));
+
+            m_Components.m_AssetManager->playSound("death");
+        }
+
+        if (m_Bricks.size() == 0)
+        {
+            // TODO: game over
+
+            m_IsPlaying = false;
         }
     }
 }
@@ -149,4 +165,6 @@ void PlayScene::render() const
     {
         m_Components.m_RenderWindow->draw(heart);
     }
+
+    m_Components.m_RenderWindow->draw(*m_ScoreText);
 }

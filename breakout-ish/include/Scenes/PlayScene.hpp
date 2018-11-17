@@ -16,6 +16,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 class PlayScene : public Scene
 {
@@ -30,17 +31,18 @@ class PlayScene : public Scene
   private:
     const CoreComponents& m_Components;
 
-    std::unique_ptr<Paddle>             m_Player;
-    std::unique_ptr<Ball>               m_Ball;
-    std::vector<std::unique_ptr<Brick>> m_Bricks;
-    std::vector<sf::Sprite>             m_Hearts;
-
+    std::unique_ptr<Paddle>               m_Player;
+    std::unique_ptr<Ball>                 m_Ball;
+    std::vector<std::unique_ptr<Brick>>   m_Bricks;
+    std::vector<sf::Sprite>               m_Hearts;
     std::random_device                    m_RandomDevice;
     std::mt19937                          m_MTGenerator;
     std::uniform_real_distribution<float> m_Distributor;
+    std::unique_ptr<sf::Text>             m_ScoreText;
 
-    short m_Health;
-    bool  m_IsPlaying;
+    short        m_Health;
+    bool         m_IsPlaying;
+    unsigned int m_Score;
 };
 
 #endif // PLAY_SCENE_HPP

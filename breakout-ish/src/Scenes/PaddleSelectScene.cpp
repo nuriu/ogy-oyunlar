@@ -39,19 +39,19 @@ void PaddleSelectScene::initialize()
     m_Title->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
     m_Title->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
                              m_Title->getLocalBounds().width / 2.0f,
-                         m_Components.m_RenderWindow->getSize().y / 4.f);
+                         m_Components.m_RenderWindow->getSize().y / 4.0f);
 
     m_LeftArrow->setCharacterSize(100);
     m_LeftArrow->setString("<");
     m_LeftArrow->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
     m_LeftArrow->setPosition(144 - m_LeftArrow->getLocalBounds().width / 2.0f,
                              m_Components.m_RenderWindow->getSize().y / 1.75f -
-                                 m_LeftArrow->getLocalBounds().height / 2.f);
+                                 m_LeftArrow->getLocalBounds().height / 2.0f);
 
     m_RightArrow->setCharacterSize(100);
     m_RightArrow->setString(">");
     m_RightArrow->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
-    m_RightArrow->setPosition(m_Components.m_RenderWindow->getSize().x - 144 -
+    m_RightArrow->setPosition(m_Components.m_RenderWindow->getSize().x - 144.0f -
                                   m_RightArrow->getLocalBounds().width / 2.0f,
                               m_Components.m_RenderWindow->getSize().y / 1.75f -
                                   m_RightArrow->getLocalBounds().height / 2.0f);
