@@ -1,9 +1,9 @@
 #include <Entities/Ball.hpp>
 
 Ball::Ball(const CoreComponents& components)
-    : m_Components(components)
-    , m_DeltaX(0.0f)
+    : m_DeltaX(0.0f)
     , m_DeltaY(0.0f)
+    , m_Components(components)
     , m_RandomDevice()
     , m_MTGenerator(m_RandomDevice())
     , m_Distributor(0, 3)

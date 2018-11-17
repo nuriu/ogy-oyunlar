@@ -1,7 +1,7 @@
 #include <Entities/Paddle.hpp>
 
 Paddle::Paddle(const CoreComponents& components, const unsigned int selectedPaddleIndex)
-    : m_Components(components), m_PaddleSpeed(1500.f), m_DeltaX(0.0f)
+    : m_DeltaX(0.0f), m_Width(0.0f), m_Height(0.0f), m_Components(components), m_PaddleSpeed(1500.f)
 {
     if (selectedPaddleIndex < 3)
     {
