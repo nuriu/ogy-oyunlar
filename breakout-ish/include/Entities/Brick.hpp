@@ -11,6 +11,9 @@
 class Brick : public sf::Sprite, public Entity
 {
   public:
+    const float m_Width  = 64.0f;
+    const float m_Height = 30.0f;
+
     explicit Brick(const CoreComponents& components, float x, float y);
 
     void initialize() override;
@@ -18,10 +21,11 @@ class Brick : public sf::Sprite, public Entity
     void update() override;
     void render() const override;
 
+    float getX() const;
+    float getY() const;
+
   private:
     const CoreComponents& m_Components;
-    const float           m_Width  = 64.0f;
-    const float           m_Height = 30.0f;
     const float           m_X;
     const float           m_Y;
 

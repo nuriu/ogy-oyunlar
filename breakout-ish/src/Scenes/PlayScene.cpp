@@ -6,7 +6,7 @@ PlayScene::PlayScene(const CoreComponents& components, const unsigned int select
     , m_Ball(std::make_unique<Ball>(m_Components))
     , m_RandomDevice()
     , m_MTGenerator(m_RandomDevice())
-    , m_Distributor(0.0f, 1.0f)
+    , m_Distributor(30.0f, 60.0f)
 {
 }
 
@@ -45,37 +45,59 @@ void PlayScene::update()
     {
         if (m_Ball->isColliding(*m_Bricks.at(i)))
         {
-            m_Components.m_AssetManager->playSound("impact");
+            const Brick& brick = *m_Bricks.at(i);
+
+            m_Ball->setPosition(
+                m_Ball->getX() + -m_Ball->m_DeltaX * m_Components.m_DeltaTime->asSeconds(),
+                m_Ball->getY() + -m_Ball->m_DeltaY * m_Components.m_DeltaTime->asSeconds());
+
+            // sağa giderken sol kenar ile çarpışma
+            if (m_Ball->m_DeltaX > 0.0f and m_Ball->getX() + m_Ball->m_Width <= brick.getX())
+            {
+                m_Ball->m_DeltaX = -m_Ball->m_DeltaX;
+            }
+            else if (m_Ball->getX() >= brick.getX() + brick.m_Width) // sola giderken sağ kenar
+            {
+                m_Ball->m_DeltaX = -m_Ball->m_DeltaX;
+            }
+            else if (m_Ball->getY() + m_Ball->m_Height <= brick.getY()) // üst kenar
+            {
+                m_Ball->m_DeltaY = -m_Ball->m_DeltaY;
+            }
+            else // alt kenar
+            {
+                m_Ball->m_DeltaY = -m_Ball->m_DeltaY;
+            }
+
+            m_Ball->m_DeltaY *= 1.025f;
+
             m_Bricks.erase(m_Bricks.begin() + i);
+            m_Components.m_AssetManager->playSound("impact");
+
+            break;
         }
     }
 
     if (m_Ball->isColliding(*m_Player))
     {
-        m_Ball->setPosition(m_Ball->getPosition().x, m_Ball->getPosition().y - 1.0f);
-        m_Ball->m_DeltaY *= -1.0f;
+        m_Ball->setPosition(m_Ball->getX(), m_Ball->getY() - m_Player->m_Height / 2.0f);
+        m_Ball->m_DeltaY = -m_Ball->m_DeltaY;
 
-        if (m_Ball->getPosition().x < m_Player->getPosition().x + (m_Player->m_Width / 2) and
-            m_Player->m_DeltaX < 0.0f)
+        if (m_Ball->m_DeltaX < 0.0f)
         {
-            m_Distributor = std::uniform_real_distribution<float>(
-                30,
-                50 + 10 * m_Player->m_Width / 2.0f -
-                    (m_Ball->getPosition().x + m_Ball->m_Width / 2.0f - m_Player->getPosition().x));
-
-            m_Ball->m_DeltaX = -1.0f * m_Distributor(m_MTGenerator);
+            m_Ball->m_DeltaX = -m_Distributor(m_MTGenerator);
         }
-        else if (m_Player->m_DeltaX > 0.0f)
+        else
         {
-            m_Distributor = std::uniform_real_distribution<float>(
-                30, 50 + 10 * m_Player->m_Width / 2.0f -
-                        (m_Ball->getPosition().x + m_Ball->m_Width / 2.0f -
-                         m_Player->getPosition().x - m_Player->m_Width / 2.0f));
-
             m_Ball->m_DeltaX = m_Distributor(m_MTGenerator);
         }
 
         m_Components.m_AssetManager->playSound("impact");
+    }
+
+    if (m_Ball->getY() > m_Components.m_RenderWindow->getSize().y)
+    {
+        m_Ball->reset();
     }
 }
 

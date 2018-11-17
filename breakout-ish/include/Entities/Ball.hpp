@@ -24,8 +24,10 @@ class Ball : public sf::Sprite, public Entity
     void update() override;
     void render() const override;
 
-    bool isColliding(const sf::Sprite& target) const;
-    void reset();
+    void  reset();
+    bool  isColliding(const sf::Sprite& target) const;
+    float getX() const;
+    float getY() const;
 
   private:
     const CoreComponents& m_Components;

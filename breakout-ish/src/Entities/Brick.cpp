@@ -26,3 +26,13 @@ void Brick::render() const
 {
     m_Components.m_RenderWindow->draw(*this);
 }
+
+float Brick::getX() const
+{
+    return this->getPosition().x;
+}
+
+float Brick::getY() const
+{
+    return this->getPosition().y;
+}

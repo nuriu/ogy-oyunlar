@@ -29,7 +29,7 @@ void Paddle::processInput()
 {
     if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Left))
     {
-        m_DeltaX = m_PaddleSpeed * m_Components.m_TimePerFrame->asSeconds() * -1.0f;
+        m_DeltaX = m_PaddleSpeed * m_Components.m_DeltaTime->asSeconds() * -1.0f;
 
         if (this->getPosition().x > 10.0f)
         {
@@ -38,7 +38,7 @@ void Paddle::processInput()
     }
     else if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Right))
     {
-        m_DeltaX = m_PaddleSpeed * m_Components.m_TimePerFrame->asSeconds();
+        m_DeltaX = m_PaddleSpeed * m_Components.m_DeltaTime->asSeconds();
 
         if (this->getPosition().x + m_Width < m_Components.m_RenderWindow->getSize().x - 10.0f)
         {
@@ -52,4 +52,14 @@ void Paddle::update() {}
 void Paddle::render() const
 {
     m_Components.m_RenderWindow->draw(*this);
+}
+
+float Paddle::getX() const
+{
+    return this->getPosition().x;
+}
+
+float Paddle::getY() const
+{
+    return this->getPosition().y;
 }
