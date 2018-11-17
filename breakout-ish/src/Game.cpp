@@ -58,7 +58,7 @@ void Game::update()
 
 void Game::render()
 {
-    m_Components->m_RenderWindow->clear(sf::Color(45, 60, 70));
+    m_Components->m_RenderWindow->clear(sf::Color(75, 90, 100));
     m_Components->m_SceneManager->getActiveScene()->render();
     m_Components->m_RenderWindow->display();
 }

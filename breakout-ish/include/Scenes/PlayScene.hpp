@@ -11,8 +11,10 @@
 #include <CoreComponents.hpp>
 #include <Entities/Paddle.hpp>
 #include <Entities/Ball.hpp>
+#include <Entities/Brick.hpp>
 
 #include <memory>
+#include <vector>
 
 class PlayScene : public Scene
 {
@@ -27,8 +29,9 @@ class PlayScene : public Scene
   private:
     const CoreComponents& m_Components;
 
-    std::unique_ptr<Paddle> m_Player;
-    std::unique_ptr<Ball>   m_Ball;
+    std::unique_ptr<Paddle>             m_Player;
+    std::unique_ptr<Ball>               m_Ball;
+    std::vector<std::unique_ptr<Brick>> m_Bricks;
 };
 
 #endif // PLAY_SCENE_HPP

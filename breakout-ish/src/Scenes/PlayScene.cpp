@@ -10,10 +10,21 @@ PlayScene::PlayScene(const CoreComponents& components, const unsigned int select
 void PlayScene::initialize()
 {
     m_Components.m_AssetManager->loadTexture("balls", "spritesheets/balls.png");
+    m_Components.m_AssetManager->loadTexture("bricks", "spritesheets/bricks.png");
     m_Components.m_AssetManager->loadSound("impact", "sounds/impact.wav");
 
     m_Player->initialize();
     m_Ball->initialize();
+
+    for (unsigned int row = 0; row < 5; ++row)
+    {
+        for (unsigned int col = 0; col < 12; ++col)
+        {
+            m_Bricks.emplace_back(
+                std::make_unique<Brick>(m_Components, col * 64.0f + 64.0f, row * 30.f + 30.f));
+            m_Bricks.back()->initialize();
+        }
+    }
 }
 
 void PlayScene::processInput()
@@ -27,6 +38,15 @@ void PlayScene::update()
     m_Player->update();
     m_Ball->update();
 
+    for (unsigned int i = 0; i < m_Bricks.size(); ++i)
+    {
+        if (m_Ball->isColliding(*m_Bricks.at(i)))
+        {
+            m_Components.m_AssetManager->playSound("impact");
+            m_Bricks.erase(m_Bricks.begin() + i);
+        }
+    }
+
     if (m_Ball->isColliding(*m_Player))
     {
         m_Ball->m_DeltaY = -m_Ball->m_DeltaY;
@@ -38,4 +58,9 @@ void PlayScene::render() const
 {
     m_Player->render();
     m_Ball->render();
+
+    for (auto& brick : m_Bricks)
+    {
+        brick->render();
+    }
 }
