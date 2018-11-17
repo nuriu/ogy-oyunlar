@@ -39,6 +39,7 @@ class PlayScene : public Scene
     std::mt19937                          m_MTGenerator;
     std::uniform_real_distribution<float> m_Distributor;
     std::unique_ptr<sf::Text>             m_ScoreText;
+    std::unique_ptr<sf::Text>             m_TitleText;
 
     short        m_Health;
     bool         m_IsPlaying;

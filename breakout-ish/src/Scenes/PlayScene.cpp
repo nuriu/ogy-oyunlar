@@ -8,6 +8,7 @@ PlayScene::PlayScene(const CoreComponents& components, const unsigned int select
     , m_MTGenerator(m_RandomDevice())
     , m_Distributor(100.0f, 150.0f)
     , m_ScoreText(std::make_unique<sf::Text>())
+    , m_TitleText(std::make_unique<sf::Text>())
     , m_Health(3)
     , m_IsPlaying(false)
     , m_Score(0)
@@ -42,13 +43,20 @@ void PlayScene::initialize()
                               sf::IntRect(0, 0, 14, 13));
 
         m_Hearts.back().setPosition(
-            m_Components.m_RenderWindow->getSize().x - 124.0f + (i + 1) * 16, 32.0f);
+            m_Components.m_RenderWindow->getSize().x - 132.0f + (i + 1) * 16, 46.0f);
     }
 
     m_ScoreText->setCharacterSize(32);
     m_ScoreText->setString("Score: " + std::to_string(m_Score));
     m_ScoreText->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
     m_ScoreText->setPosition(64.0f, 24.0f);
+
+    m_TitleText->setCharacterSize(32);
+    m_TitleText->setString("Press Space to Start!");
+    m_TitleText->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
+    m_TitleText->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
+                                 m_TitleText->getLocalBounds().width / 2.0f,
+                             24.0f);
 }
 
 void PlayScene::processInput()
@@ -63,6 +71,10 @@ void PlayScene::processInput()
         if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Space))
         {
             m_IsPlaying = !m_IsPlaying;
+            m_TitleText->setString("Level: 1");
+            m_TitleText->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
+                                         m_TitleText->getLocalBounds().width / 2.0f,
+                                     24.0f);
         }
     }
 }
@@ -134,6 +146,11 @@ void PlayScene::update()
                 // TODO: game over
                 m_IsPlaying = false;
                 m_Player->reset();
+
+                m_TitleText->setString("You lost your all hearts!");
+                m_TitleText->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
+                                             m_TitleText->getLocalBounds().width / 2.0f,
+                                         24.0f);
             }
 
             m_Hearts.at(static_cast<unsigned long>(m_Health))
@@ -147,6 +164,11 @@ void PlayScene::update()
             // TODO: game over
 
             m_IsPlaying = false;
+
+            m_TitleText->setString("You won!");
+            m_TitleText->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
+                                         m_TitleText->getLocalBounds().width / 2.0f,
+                                     24.0f);
         }
     }
 }
@@ -167,4 +189,5 @@ void PlayScene::render() const
     }
 
     m_Components.m_RenderWindow->draw(*m_ScoreText);
+    m_Components.m_RenderWindow->draw(*m_TitleText);
 }
