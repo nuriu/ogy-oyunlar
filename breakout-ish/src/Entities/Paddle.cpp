@@ -17,12 +17,10 @@ Paddle::Paddle(const CoreComponents& components, const unsigned int selectedPadd
 
 void Paddle::initialize()
 {
-    this->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
-                          this->getLocalBounds().width / 2.0f,
-                      m_Components.m_RenderWindow->getSize().y - 25.0f);
-
     m_Width  = this->getLocalBounds().width;
     m_Height = this->getLocalBounds().height;
+
+    this->reset();
 }
 
 void Paddle::processInput()
@@ -48,6 +46,13 @@ void Paddle::processInput()
 }
 
 void Paddle::update() {}
+
+void Paddle::reset()
+{
+    this->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
+                          this->getLocalBounds().width / 2.0f,
+                      m_Components.m_RenderWindow->getSize().y - m_Height * 2.0f);
+}
 
 void Paddle::render() const
 {

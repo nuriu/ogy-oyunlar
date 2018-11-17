@@ -40,6 +40,7 @@ class PlayScene : public Scene
     std::uniform_real_distribution<float> m_Distributor;
 
     short m_Health;
+    bool  m_IsPlaying;
 };
 
 #endif // PLAY_SCENE_HPP

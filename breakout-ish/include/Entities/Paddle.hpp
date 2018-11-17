@@ -20,7 +20,8 @@ class Paddle : public sf::Sprite, public Entity
     void processInput() override;
     void update() override;
     void render() const override;
-
+    
+    void  reset();
     float getX() const;
     float getY() const;
 
