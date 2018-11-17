@@ -4,6 +4,9 @@ PlayScene::PlayScene(const CoreComponents& components, const unsigned int select
     : m_Components(components)
     , m_Player(std::make_unique<Paddle>(m_Components, selectedPaddleIndex))
     , m_Ball(std::make_unique<Ball>(m_Components))
+    , m_RandomDevice()
+    , m_MTGenerator(m_RandomDevice())
+    , m_Distributor(0.0f, 1.0f)
 {
 }
 
@@ -49,7 +52,29 @@ void PlayScene::update()
 
     if (m_Ball->isColliding(*m_Player))
     {
-        m_Ball->m_DeltaY = -m_Ball->m_DeltaY;
+        m_Ball->setPosition(m_Ball->getPosition().x, m_Ball->getPosition().y - 1.0f);
+        m_Ball->m_DeltaY *= -1.0f;
+
+        if (m_Ball->getPosition().x < m_Player->getPosition().x + (m_Player->m_Width / 2) and
+            m_Player->m_DeltaX < 0.0f)
+        {
+            m_Distributor = std::uniform_real_distribution<float>(
+                30,
+                50 + 10 * m_Player->m_Width / 2.0f -
+                    (m_Ball->getPosition().x + m_Ball->m_Width / 2.0f - m_Player->getPosition().x));
+
+            m_Ball->m_DeltaX = -1.0f * m_Distributor(m_MTGenerator);
+        }
+        else if (m_Player->m_DeltaX > 0.0f)
+        {
+            m_Distributor = std::uniform_real_distribution<float>(
+                30, 50 + 10 * m_Player->m_Width / 2.0f -
+                        (m_Ball->getPosition().x + m_Ball->m_Width / 2.0f -
+                         m_Player->getPosition().x - m_Player->m_Width / 2.0f));
+
+            m_Ball->m_DeltaX = m_Distributor(m_MTGenerator);
+        }
+
         m_Components.m_AssetManager->playSound("impact");
     }
 }

@@ -1,7 +1,7 @@
 #include <Entities/Paddle.hpp>
 
 Paddle::Paddle(const CoreComponents& components, const unsigned int selectedPaddleIndex)
-    : m_Components(components), m_PaddleSpeed(1500.f)
+    : m_Components(components), m_PaddleSpeed(1500.f), m_DeltaX(0.0f)
 {
     if (selectedPaddleIndex < 3)
     {
@@ -29,16 +29,20 @@ void Paddle::processInput()
 {
     if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Left))
     {
+        m_DeltaX = m_PaddleSpeed * m_Components.m_TimePerFrame->asSeconds() * -1.0f;
+
         if (this->getPosition().x > 10.0f)
         {
-            this->move(m_PaddleSpeed * m_Components.m_TimePerFrame->asSeconds() * -1.0f, 0.0f);
+            this->move(m_DeltaX, 0.0f);
         }
     }
     else if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Right))
     {
+        m_DeltaX = m_PaddleSpeed * m_Components.m_TimePerFrame->asSeconds();
+
         if (this->getPosition().x + m_Width < m_Components.m_RenderWindow->getSize().x - 10.0f)
         {
-            this->move(m_PaddleSpeed * m_Components.m_TimePerFrame->asSeconds(), 0.0f);
+            this->move(m_DeltaX, 0.0f);
         }
     }
 }

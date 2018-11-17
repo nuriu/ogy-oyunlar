@@ -32,6 +32,10 @@ class PlayScene : public Scene
     std::unique_ptr<Paddle>             m_Player;
     std::unique_ptr<Ball>               m_Ball;
     std::vector<std::unique_ptr<Brick>> m_Bricks;
+
+    std::random_device                    m_RandomDevice;
+    std::mt19937                          m_MTGenerator;
+    std::uniform_real_distribution<float> m_Distributor;
 };
 
 #endif // PLAY_SCENE_HPP

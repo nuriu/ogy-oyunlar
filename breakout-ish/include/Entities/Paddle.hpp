@@ -10,6 +10,10 @@
 class Paddle : public sf::Sprite, public Entity
 {
   public:
+    float m_DeltaX;
+    float m_Width;
+    float m_Height;
+
     explicit Paddle(const CoreComponents& components, unsigned int selectedPaddleIndex);
 
     void initialize() override;
@@ -20,8 +24,6 @@ class Paddle : public sf::Sprite, public Entity
   private:
     const CoreComponents& m_Components;
     const float           m_PaddleSpeed;
-    float                 m_Width;
-    float                 m_Height;
 };
 
 #endif // PADDLE_HPP
