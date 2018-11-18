@@ -12,8 +12,10 @@ Ball::Ball(const CoreComponents& components)
 
 void Ball::initialize()
 {
+    m_ID = static_cast<unsigned int>(m_Distributor(m_MTGenerator));
+
     this->setTexture(m_Components.m_AssetManager->getTexture("balls"));
-    this->setTextureRect(sf::IntRect(0, static_cast<int>(m_Distributor(m_MTGenerator) * m_Height),
+    this->setTextureRect(sf::IntRect(0, static_cast<int>(m_ID * m_Height),
                                      static_cast<int>(m_Width), static_cast<int>(m_Height)));
     this->reset();
 }
@@ -70,21 +72,7 @@ void Ball::reset()
 
 bool Ball::isColliding(const sf::Sprite& target) const
 {
-    auto targetPosition = target.getPosition();
-    auto targetBounds   = target.getLocalBounds();
-
-    if (this->getX() > targetPosition.x + targetBounds.width or
-        targetPosition.x > this->getX() + m_Width)
-    {
-        return false;
-    }
-    else if (this->getY() + m_Height > targetPosition.y + targetBounds.height or
-             targetPosition.y > this->getY() + m_Height)
-    {
-        return false;
-    }
-
-    return true;
+    return this->getGlobalBounds().intersects(target.getGlobalBounds());
 }
 
 float Ball::getX() const

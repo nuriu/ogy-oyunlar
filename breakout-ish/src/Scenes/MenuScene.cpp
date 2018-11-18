@@ -11,7 +11,6 @@ MenuScene::MenuScene(const CoreComponents& components)
 
 void MenuScene::initialize()
 {
-    m_Components.m_AssetManager->loadFont("kenney-high", "fonts/Kenney-High.ttf");
     m_Components.m_AssetManager->loadSound("click", "sounds/click.wav");
 
     m_Title->setCharacterSize(100);

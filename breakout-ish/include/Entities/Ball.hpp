@@ -31,6 +31,7 @@ class Ball : public sf::Sprite, public Entity
 
   private:
     const CoreComponents& m_Components;
+    unsigned int          m_ID;
 
     std::random_device                 m_RandomDevice;
     std::mt19937                       m_MTGenerator;

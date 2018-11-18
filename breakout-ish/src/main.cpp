@@ -4,7 +4,7 @@
 
 int main()
 {
-    std::unique_ptr<Game> game(new Game("Breakout-ish", 896, 600));
+    std::unique_ptr<Game> game = std::make_unique<Game>("Breakout-ish", 896, 600);
 
     game->run();
 

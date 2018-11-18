@@ -19,8 +19,8 @@ struct CoreComponents
 
     std::unique_ptr<sf::RenderWindow> m_RenderWindow;
     std::unique_ptr<sf::Time>         m_DeltaTime = std::make_unique<sf::Time>(sf::Time::Zero);
-    const std::unique_ptr<sf::Time>   m_TimePerFrame =
-        std::make_unique<sf::Time>(sf::seconds(1.0f / 60.f));
+
+    int m_FPS = 0;
 };
 
 #endif // CORE_COMPONENTS_HPP
