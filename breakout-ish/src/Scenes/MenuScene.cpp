@@ -4,7 +4,7 @@ MenuScene::MenuScene(const CoreComponents& components)
     : m_Components(components)
     , m_Title(std::make_unique<sf::Text>())
     , m_Start(std::make_unique<sf::Text>())
-    , m_HighScores(std::make_unique<sf::Text>())
+    , m_Exit(std::make_unique<sf::Text>())
     , m_MenuSelectedIndex(0)
 {
 }
@@ -28,11 +28,11 @@ void MenuScene::initialize()
                              m_Start->getLocalBounds().width / 2.0f,
                          m_Components.m_RenderWindow->getSize().y / 1.5f);
 
-    m_HighScores->setCharacterSize(50);
-    m_HighScores->setString("High Scores");
-    m_HighScores->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
-    m_HighScores->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
-                                  m_HighScores->getLocalBounds().width / 2.0f,
+    m_Exit->setCharacterSize(50);
+    m_Exit->setString("Exit");
+    m_Exit->setFont(m_Components.m_AssetManager->getFont("kenney-high"));
+    m_Exit->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
+                                  m_Exit->getLocalBounds().width / 2.0f,
                               m_Start->getPosition().y + m_Start->getLocalBounds().height * 2.0f);
 }
 
@@ -47,13 +47,13 @@ void MenuScene::processInput()
         {
             m_MenuSelectedIndex = 1;
             m_Start->setFillColor(sf::Color::White);
-            m_HighScores->setFillColor(sf::Color::Green);
+            m_Exit->setFillColor(sf::Color::Green);
         }
         else
         {
             m_MenuSelectedIndex = 0;
             m_Start->setFillColor(sf::Color::Green);
-            m_HighScores->setFillColor(sf::Color::White);
+            m_Exit->setFillColor(sf::Color::White);
         }
     }
 
@@ -66,7 +66,7 @@ void MenuScene::processInput()
         }
         else
         {
-            // TODO: yüksek skorlar sahnesine geç
+            m_Components.m_RenderWindow->close();
         }
     }
 }
@@ -77,5 +77,5 @@ void MenuScene::render() const
 {
     m_Components.m_RenderWindow->draw(*m_Title);
     m_Components.m_RenderWindow->draw(*m_Start);
-    m_Components.m_RenderWindow->draw(*m_HighScores);
+    m_Components.m_RenderWindow->draw(*m_Exit);
 }

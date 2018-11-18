@@ -17,6 +17,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <cmath>
 
 class PlayScene : public Scene
 {
@@ -43,6 +44,7 @@ class PlayScene : public Scene
 
     short        m_Health;
     bool         m_IsPlaying;
+    bool         m_IsGameOver;
     unsigned int m_Score;
 };
 

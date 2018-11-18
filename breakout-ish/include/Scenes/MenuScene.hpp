@@ -28,7 +28,7 @@ class MenuScene : public Scene
 
     std::unique_ptr<sf::Text> m_Title;
     std::unique_ptr<sf::Text> m_Start;
-    std::unique_ptr<sf::Text> m_HighScores;
+    std::unique_ptr<sf::Text> m_Exit;
 
     unsigned int m_MenuSelectedIndex;
 };

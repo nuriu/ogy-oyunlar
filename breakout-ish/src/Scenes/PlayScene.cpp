@@ -11,6 +11,7 @@ PlayScene::PlayScene(const CoreComponents& components, const unsigned int select
     , m_TitleText(std::make_unique<sf::Text>())
     , m_Health(3)
     , m_IsPlaying(false)
+    , m_IsGameOver(false)
     , m_Score(0)
 
 {
@@ -66,12 +67,12 @@ void PlayScene::processInput()
         m_Player->processInput();
         m_Ball->processInput();
     }
-    else
+    else if (!m_IsGameOver)
     {
         if (m_Components.m_InputManager->isKeyPressed(sf::Keyboard::Space))
         {
             m_IsPlaying = !m_IsPlaying;
-            m_TitleText->setString("Level: 1");
+            m_TitleText->setString("Playing");
             m_TitleText->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
                                          m_TitleText->getLocalBounds().width / 2.0f,
                                      24.0f);
@@ -122,16 +123,25 @@ void PlayScene::update()
 
         if (m_Ball->isColliding(*m_Player))
         {
-            m_Ball->setPosition(m_Ball->getX(), m_Ball->getY() - m_Player->m_Height / 2.0f);
+            m_Ball->setPosition(
+                m_Ball->getX() + -m_Ball->m_DeltaX * m_Components.m_DeltaTime->asSeconds(),
+                m_Ball->getY() + -m_Ball->m_DeltaY * m_Components.m_DeltaTime->asSeconds());
+
             m_Ball->m_DeltaY = -m_Ball->m_DeltaY;
 
-            if (m_Ball->m_DeltaX < 0.0f)
+            if (m_Player->m_DeltaX < 0.0f and m_Ball->getX() + m_Ball->m_Width / 2.0f <
+                                                  m_Player->getX() + m_Player->m_Width / 2.0f)
             {
-                m_Ball->m_DeltaX = -m_Distributor(m_MTGenerator);
+                m_Ball->m_DeltaX =
+                    -50 + -(m_Ball->m_Width / 2.0f *
+                            (m_Player->getX() + m_Player->m_Width / 2.0f - m_Ball->getX()));
             }
-            else
+            else if (m_Player->m_DeltaX > 0.0f and
+                     m_Ball->getX() > m_Player->getX() + m_Player->m_Width / 2.0f)
             {
-                m_Ball->m_DeltaX = m_Distributor(m_MTGenerator);
+                m_Ball->m_DeltaX =
+                    50 + (m_Ball->m_Width / 2.0f *
+                          abs(m_Player->getX() + m_Player->m_Width / 2.0f - m_Ball->getX()));
             }
 
             m_Components.m_AssetManager->playSound("impact");
@@ -143,8 +153,8 @@ void PlayScene::update()
 
             if (--m_Health < 1)
             {
-                // TODO: game over
-                m_IsPlaying = false;
+                m_IsPlaying  = false;
+                m_IsGameOver = true;
                 m_Player->reset();
 
                 m_TitleText->setString("You lost your all hearts!");
@@ -159,13 +169,12 @@ void PlayScene::update()
             m_Components.m_AssetManager->playSound("death");
         }
 
-        if (m_Bricks.size() == 0)
+        if (m_Bricks.empty())
         {
-            // TODO: game over
+            m_IsPlaying  = false;
+            m_IsGameOver = true;
 
-            m_IsPlaying = false;
-
-            m_TitleText->setString("You won!");
+            m_TitleText->setString("You won the game! Press ESC to exit.");
             m_TitleText->setPosition(m_Components.m_RenderWindow->getSize().x / 2.0f -
                                          m_TitleText->getLocalBounds().width / 2.0f,
                                      24.0f);
