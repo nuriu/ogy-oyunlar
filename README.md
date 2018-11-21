@@ -2,7 +2,7 @@
 
 > [Oyun Geliştirme Yolu](https://github.com/nuriu/oyun-gelistirme-yolu) kapsamında geliştirilen oyun projelerinden oluşan depo.
 
-Projeler [sfml-cmake-vscode](https://github.com/nuriu/sfml-cmake-vscode) proje şablonu kullanılarak geliştirilmektedir.
+Projeler [sfml-engine](https://github.com/nuriu/sfml-engine) proje şablonu kullanılarak geliştirilmektedir.
 
 Projeler;
 
